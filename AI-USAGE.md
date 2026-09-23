@@ -1,52 +1,88 @@
-# AI usage
+# AI Usage
 
-This project was built with AI assistance. This file is the record of it. It is
-graded as the finals badge, and it is worth 100 points.
+This project was developed with assistance from ChatGPT. AI was used for
+planning, explaining code, debugging, and reviewing implementation decisions.
+All generated code was reviewed, tested, and modified as needed.
 
-Start it in week 1 and keep it up as you go. The commit history of this file is
-part of the evidence: a file written all at once the night before the deadline
-looks exactly like what it is.
+## AI Usage Entries
 
-## 1. How I used AI
+### Entry 1 — Navigation Bar
 
-At least six entries. One per real use. Every entry needs a commit link.
+- Tool: ChatGPT
+- Date: September 23, 2026
+- Request: Help implement and organize the navigation bar for the Pasta Perfect application.
+- What I kept or changed: I used the suggested navigation structure and adapted the implementation to the existing PastaPerfect React project.
+- Commit: https://github.com/roki-a/PastaPerfect/commit/ef963ca
 
-### YYYY-MM-DD - short title
+### Entry 2 — [Feature/task]
 
-- **Tool:**
-- **What I asked for:**
-- **What it gave back:**
-- **What I kept, what I changed, and why:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- Tool: ChatGPT
+- Date: [date]
+- Request: [what I asked]
+- What I kept or changed: [what I actually used and what I changed]
+- Commit: [commit link]
 
-## 2. Where the AI got it wrong
+### Entry 3 — [Feature/task]
 
-Three cases. Be specific. If you write that the AI was never wrong, this section
-scores zero.
+- Tool: ChatGPT
+- Date: [date]
+- Request: [what I asked]
+- What I kept or changed: [what I actually used and what I changed]
+- Commit: [commit link]
 
-### Case 1 - short title
+### Entry 4 — [Feature/task]
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- Tool: ChatGPT
+- Date: [date]
+- Request: [what I asked]
+- What I kept or changed: [what I actually used and what I changed]
+- Commit: [commit link]
 
-## 3. Who wrote what
+### Entry 5 — [Feature/task]
 
-At least a fifth of this project is code you wrote yourself. Name it, and explain
-it in your own words.
+- Tool: ChatGPT
+- Date: [date]
+- Request: [what I asked]
+- What I kept or changed: [what I actually used and what I changed]
+- Commit: [commit link]
 
-> Group projects: give each member their own heading below, and use your GitHub
-> handle as the heading. You are graded on your own section.
+### Entry 6 — [Feature/task]
 
-### Written by me
+- Tool: ChatGPT
+- Date: [date]
+- Request: [what I asked]
+- What I kept or changed: [what I actually used and what I changed]
+- Commit: [commit link]
 
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
+## Where AI Got It Wrong
 
-### The AI-written part I understand best
+### Case 1 — [short description]
 
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+- AI output:
+- What was wrong:
+- How I fixed it:
+- Commit:
+
+### Case 2 — [short description]
+
+- AI output:
+- What was wrong:
+- How I fixed it:
+- Commit:
+
+### Case 3 — [short description]
+
+- AI output:
+- What was wrong:
+- How I fixed it:
+- Commit:
+
+## My Own Work
+
+The following parts were written, adapted, tested, or substantially changed by me:
+
+- [file/feature]
+- [file/feature]
+- [file/feature]
+
+I reviewed and tested AI-assisted code before keeping it in the project.
