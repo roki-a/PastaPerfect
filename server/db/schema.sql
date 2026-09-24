@@ -1,20 +1,17 @@
--- The complete shape of the database. Safe to run against an empty database,
--- and safe to run twice.
+-- Pasta Perfect database schema.
 --
--- This file is committed on purpose. Your schema is a fact about your
--- application, not a runtime concern: it should be readable by opening a file
--- rather than by connecting to a server. It is also what lets you move to a
--- hosted database in one command.
+-- This file defines the data required by the Pasta Perfect application.
+-- It is safe to run against an empty database and safe to run more than once.
 
-CREATE TABLE IF NOT EXISTS sightings (
-  id          SERIAL PRIMARY KEY,
-  place       TEXT        NOT NULL,
-  description TEXT        NOT NULL DEFAULT '',
-  spookiness  INTEGER     NOT NULL CHECK (spookiness BETWEEN 1 AND 5),
-  reported_at TIMESTAMPTZ NOT NULL DEFAULT now()
+CREATE TABLE IF NOT EXISTS pasta (
+  id                SERIAL PRIMARY KEY,
+  name              TEXT NOT NULL,
+  image             TEXT NOT NULL,
+  al_dente_seconds  INTEGER NOT NULL,
+  firm_seconds      INTEGER NOT NULL,
+  soft_seconds      INTEGER NOT NULL
 );
 
--- The list page always sorts newest first. Without this the database reads
--- every row and sorts it on each request.
-CREATE INDEX IF NOT EXISTS sightings_reported_at_idx
-  ON sightings (reported_at DESC);
+-- Keeps pasta names easy to search and prevents duplicate preset names.
+CREATE UNIQUE INDEX IF NOT EXISTS pasta_name_idx
+  ON pasta (name);
