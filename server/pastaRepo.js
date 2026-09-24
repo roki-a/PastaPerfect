@@ -1,9 +1,9 @@
 // Data-access layer for Pasta Perfect.
 //
-// Database values are always passed through PostgreSQL parameters rather than
+// Database values are passed through PostgreSQL parameters rather than
 // being inserted directly into SQL strings.
 
-export async function getAll(pool) {
+export async function getAll(pool, search = '') {
   const result = await pool.query(
     `SELECT
        id,
@@ -13,7 +13,11 @@ export async function getAll(pool) {
        firm_seconds AS "firmSeconds",
        soft_seconds AS "softSeconds"
      FROM pasta
-     ORDER BY id ASC`
+     WHERE
+       $1 = ''
+       OR name ILIKE '%' || $1 || '%'
+     ORDER BY id ASC`,
+    [search],
   )
 
   return result.rows
@@ -30,7 +34,7 @@ export async function getById(pool, id) {
        soft_seconds AS "softSeconds"
      FROM pasta
      WHERE id = $1`,
-    [id]
+    [id],
   )
 
   return result.rows[0] ?? null

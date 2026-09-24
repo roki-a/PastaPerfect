@@ -15,35 +15,55 @@ const allowedOrigins = (
 app.use(cors({ origin: allowedOrigins }))
 app.use(express.json({ limit: '100kb' }))
 
-// Basic server health check
+// Basic process health check.
 app.get('/healthz', (request, response) => {
   response.json({ ok: true })
 })
 
-// Database health check
+// Database health check.
 app.get('/readyz', async (request, response) => {
   try {
     await pool.query('SELECT 1')
-    response.json({ ok: true, db: 'up' })
+
+    response.json({
+      ok: true,
+      db: 'up',
+    })
   } catch (error) {
     console.error('readyz failed:', error.message)
-    response.status(503).json({ ok: false, db: 'down' })
+
+    response.status(503).json({
+      ok: false,
+      db: 'down',
+    })
   }
 })
 
-// Get all pasta presets
+// Get all pasta presets.
+// Optional search:
+// GET /api/pasta?search=penne
 app.get('/api/pasta', async (request, response, next) => {
   try {
-    response.json(await pasta.getAll(pool))
+    const search =
+      typeof request.query.search === 'string'
+        ? request.query.search.trim()
+        : ''
+
+    const rows = await pasta.getAll(pool, search)
+
+    response.json(rows)
   } catch (error) {
     next(error)
   }
 })
 
-// Get one pasta preset
+// Get one pasta preset.
 app.get('/api/pasta/:id', async (request, response, next) => {
   try {
-    const row = await pasta.getById(pool, request.params.id)
+    const row = await pasta.getById(
+      pool,
+      request.params.id,
+    )
 
     if (!row) {
       return response.status(404).json({
@@ -57,14 +77,14 @@ app.get('/api/pasta/:id', async (request, response, next) => {
   }
 })
 
-// 404 handler
+// Unknown routes.
 app.use((request, response) => {
   response.status(404).json({
     error: 'No such route',
   })
 })
 
-// Error handler
+// Server errors.
 app.use((error, request, response, next) => {
   console.error(error)
 
@@ -76,6 +96,6 @@ app.use((error, request, response, next) => {
 const port = process.env.PORT || 3000
 
 app.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`)
+  console.log(`Pasta Perfect API listening on http://localhost:${port}`)
   console.log(`CORS allows: ${allowedOrigins.join(', ')}`)
 })
