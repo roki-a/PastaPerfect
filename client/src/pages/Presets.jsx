@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import Layout from '../components/Layout'
 import { listPasta } from '../api/httpApi'
 
@@ -39,6 +40,7 @@ function Segmented({ value, onChange }) {
           type="button"
           className={value === key ? 'selected' : ''}
           onClick={() => onChange(key)}
+          aria-pressed={value === key}
         >
           {label}
         </button>
@@ -68,7 +70,7 @@ function PastaCard({ pasta, doneness }) {
           />
         </div>
 
-        <div>
+        <div className="pasta-info">
           <h2>{pasta.name}</h2>
 
           <Tag tone={isMine ? 'mine' : 'recommended'}>
@@ -77,22 +79,26 @@ function PastaCard({ pasta, doneness }) {
         </div>
       </div>
 
-      <div className="time">
-        {secondsLabel(seconds)}
+      <div className="card-bottom">
+        <div className="card-time">
+          <div className="time">
+            {secondsLabel(seconds)}
+          </div>
+
+          <p className="muted">
+            {isMine
+              ? `Saved for you · ${DONENESS[doneness]}`
+              : DONENESS[doneness]}
+          </p>
+        </div>
+
+        <Link
+          className="button"
+          to={`/cook/${pasta.id}?doneness=${doneness}`}
+        >
+          Start
+        </Link>
       </div>
-
-      <p className="muted">
-        {isMine
-          ? `Saved for you · ${DONENESS[doneness]}`
-          : `${DONENESS[doneness]} starting point`}
-      </p>
-
-      <Link
-        className="button"
-        to={`/cook/${pasta.id}?doneness=${doneness}`}
-      >
-        Start
-      </Link>
     </article>
   )
 }
@@ -131,49 +137,43 @@ export default function Presets() {
 
   return (
     <Layout>
-      <section className="page-heading">
-        <div>
-          <Tag tone="info">
-            Pasta timer
-          </Tag>
+      <section className="page-heading presets-heading">
+        <h1>Pick a pasta</h1>
+      </section>
 
-          <h1>
-            Pick your pasta.
-            <br />
-            Cook it your way.
-          </h1>
+      <section className="filter-panel">
+        <label className="search">
+          <span>Search Pasta</span>
 
-          <p>
-            Choose how you like it, then start
-            a timer that remembers your own
-            time when you save one.
-          </p>
-        </div>
-
-        <div className="filter-row">
-          <label className="search">
-            <span>Search</span>
-
+          <div className="search-controls">
             <input
               type="search"
               value={search}
-              onChange={(event) =>
+              onChange={(event) => {
                 setSearch(event.target.value)
-              }
-              placeholder="spaghetti, penne..."
+              }}
+              placeholder="Search Pasta"
+              aria-label="Search Pasta"
             />
-          </label>
 
-          <div>
-            <span className="field-label">
-              Doneness
-            </span>
-
-            <Segmented
-              value={doneness}
-              onChange={setDoneness}
-            />
+            <button
+              type="button"
+              className="search-button"
+            >
+              Search
+            </button>
           </div>
+        </label>
+
+        <div className="doneness-filter">
+          <span className="field-label">
+            Doneness
+          </span>
+
+          <Segmented
+            value={doneness}
+            onChange={setDoneness}
+          />
         </div>
       </section>
 
