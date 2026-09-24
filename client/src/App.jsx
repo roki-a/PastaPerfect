@@ -7,7 +7,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Presets />} />
-        <Route path="/cook" element={<Cook />} />
+        <Route path="/cook/:id" element={<Cook />} />
       </Routes>
     </BrowserRouter>
   )

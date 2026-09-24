@@ -1,6 +1,14 @@
-import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
+
+const API = '/api'
+
+const DONENESS = {
+  al_dente: 'Al dente',
+  firm: 'Firm',
+  soft: 'Soft',
+}
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60)
@@ -12,16 +20,71 @@ function formatTime(totalSeconds) {
   )}`
 }
 
+function getSeconds(pasta, doneness) {
+  if (!pasta) return 0
+
+  if (doneness === 'firm') {
+    return pasta.firmSeconds
+  }
+
+  if (doneness === 'soft') {
+    return pasta.softSeconds
+  }
+
+  return pasta.alDenteSeconds
+}
+
 export default function Cook() {
-  const location = useLocation()
+  const { id } = useParams()
+  const [searchParams] = useSearchParams()
 
-  const pasta = location.state?.pasta
+  const doneness = searchParams.get('doneness') || 'al_dente'
 
-  const initialSeconds = pasta?.seconds ?? 540
-
-  const [secondsLeft, setSecondsLeft] = useState(initialSeconds)
+  const [pasta, setPasta] = useState(null)
+  const [secondsLeft, setSecondsLeft] = useState(0)
   const [running, setRunning] = useState(false)
   const [done, setDone] = useState(false)
+  const [error, setError] = useState('')
+
+  const initialSeconds = useMemo(
+    () => getSeconds(pasta, doneness),
+    [pasta, doneness],
+  )
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadPasta() {
+      setError('')
+
+      try {
+        const response = await fetch(`${API}/pasta/${id}`)
+
+        if (!response.ok) {
+          throw new Error('Could not load pasta.')
+        }
+
+        const data = await response.json()
+
+        if (!cancelled) {
+          setPasta(data)
+          setSecondsLeft(getSeconds(data, doneness))
+          setDone(false)
+          setRunning(false)
+        }
+      } catch {
+        if (!cancelled) {
+          setError('Could not load pasta.')
+        }
+      }
+    }
+
+    loadPasta()
+
+    return () => {
+      cancelled = true
+    }
+  }, [id, doneness])
 
   useEffect(() => {
     if (!running || secondsLeft <= 0) return
@@ -59,35 +122,55 @@ export default function Cook() {
     setSecondsLeft(initialSeconds)
   }
 
+  if (error) {
+    return (
+      <Layout>
+        <p className="error" role="alert">
+          {error}
+        </p>
+
+        <Link className="button" to="/">
+          Back to pasta
+        </Link>
+      </Layout>
+    )
+  }
+
+  if (!pasta) {
+    return (
+      <Layout>
+        <p className="muted">Loading pasta...</p>
+      </Layout>
+    )
+  }
+
   return (
     <Layout>
-      <div className="back">
-        <Link to="/">← Back to presets</Link>
-      </div>
+      <section className="cook-layout">
+        <div className="cook-main">
+          <Link className="back" to="/">
+            ← Back to pasta
+          </Link>
 
-      <section className={`cook-layout ${done ? 'done' : ''}`}>
-        <div className="cook-timer card">
-          <div className="tomato">
-            <div className="stem" aria-hidden="true">
-              🍃
-            </div>
+          <div className="timer-window">
+            <strong>{formatTime(secondsLeft)}</strong>
 
-            <div className="timer-window">
-              <strong>{formatTime(secondsLeft)}</strong>
-
-              <span>
-                {done
-                  ? 'Done!'
-                  : running
-                    ? 'Cooking'
-                    : 'Ready'}
-              </span>
-            </div>
+            <span>
+              {done
+                ? 'Done!'
+                : running
+                  ? 'Cooking'
+                  : 'Ready'}
+            </span>
           </div>
 
           <div className="timer-controls">
             {!running && !done && (
-              <button className="button" type="button" onClick={handleStart}>
+              <button
+                className="button"
+                type="button"
+                onClick={handleStart}
+              >
                 Start
               </button>
             )}
@@ -121,11 +204,9 @@ export default function Cook() {
         <aside className="cook-details">
           <span className="tag info">Cooking</span>
 
-          <h1>{pasta?.name ?? 'Spaghetti'}</h1>
+          <h1>{pasta.name}</h1>
 
-          <p>
-            {pasta?.doneness ?? 'Al dente'} starting point.
-          </p>
+          <p>{DONENESS[doneness]} starting point.</p>
 
           <h3>While it cooks</h3>
 

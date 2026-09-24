@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
-
 import { Link } from 'react-router-dom'
-
 import Layout from '../components/Layout'
-
-const API = '/api'
+import { listPasta } from '../api/httpApi'
 
 const DONENESS = {
   al_dente: 'Al dente',
@@ -21,23 +18,12 @@ function secondsLabel(seconds) {
   ).padStart(2, '0')}`
 }
 
-function PastaIcon({ image, name, size = 56 }) {
-  return (
-    <img
-      className="pasta-icon"
-      src={`/${image}`}
-      alt={`${name} pasta`}
-      style={{
-        width: size,
-        height: size,
-        objectFit: 'contain',
-      }}
-    />
-  )
-}
-
 function Tag({ children, tone = 'info' }) {
-  return <span className={`tag ${tone}`}>{children}</span>
+  return (
+    <span className={`tag ${tone}`}>
+      {children}
+    </span>
+  )
 }
 
 function Segmented({ value, onChange }) {
@@ -62,35 +48,30 @@ function Segmented({ value, onChange }) {
 }
 
 function PastaCard({ pasta, doneness }) {
-  const timeKey =
-    doneness === 'al_dente'
-      ? 'alDenteSeconds'
-      : `${doneness}Seconds`
+  const recommended =
+    doneness === 'firm'
+      ? pasta.firmSeconds
+      : doneness === 'soft'
+        ? pasta.softSeconds
+        : pasta.alDenteSeconds
 
-  const recommended = pasta[timeKey]
-
-  const seconds =
-    pasta.mySeconds != null
-      ? pasta.mySeconds
-      : recommended
-
+  const seconds = pasta.mySeconds ?? recommended
   const isMine = pasta.mySeconds != null
 
   return (
     <article className="card pasta-card">
       <div className="card-top">
-        <PastaIcon
-          image={pasta.image}
-          name={pasta.name}
-          size={56}
-        />
+        <div className="pasta-icon">
+          <img
+            src={`/${pasta.image}`}
+            alt={`${pasta.name} pasta`}
+          />
+        </div>
 
         <div>
           <h2>{pasta.name}</h2>
 
-          <Tag
-            tone={isMine ? 'mine' : 'recommended'}
-          >
+          <Tag tone={isMine ? 'mine' : 'recommended'}>
             {isMine ? 'My time' : 'Recommended'}
           </Tag>
         </div>
@@ -129,15 +110,7 @@ export default function Presets() {
       setError('')
 
       try {
-        const response = await fetch(
-          `${API}/pasta?search=${encodeURIComponent(search)}`,
-        )
-
-        if (!response.ok) {
-          throw new Error('Could not load pasta.')
-        }
-
-        const data = await response.json()
+        const data = await listPasta(search)
 
         if (!cancelled) {
           setPasta(data)

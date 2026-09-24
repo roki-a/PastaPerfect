@@ -1,174 +1,385 @@
-# Your Project Name
+# Pasta Perfect
 
-> **Replace this whole file.** It is a worked example of the README your project
-> will be graded from, not a file to leave as it is. Start with
-> [START-HERE.md](START-HERE.md).
+Pasta Perfect is a web application that helps users choose a pasta preset, select their preferred doneness, and cook pasta using a simple countdown timer.
 
-One sentence saying what this does and who it is for.
+**Live site:** https://roki-a.github.io/pasta-perfect/
 
-**Live site:** https://yourusername.github.io/your-repo-name/
-**API:** https://your-api.onrender.com/healthz
-**Demo video:** (link)
+**API:** Not deployed yet
 
-> **This deployment is running in demo mode.** The interface is real; the backend
-> is simulated in your browser so the site works without a server. See
-> [Demo mode](#demo-mode) below. Delete this quote once your API is live.
+**Demo video:** Add your demo video link here
 
-![A screenshot of the main screen](docs/assets/screenshot.png)
+![Pasta Perfect screenshot](docs/assets/screenshot.png)
 
 ## What it does
 
-- Report a sighting with a place, a description and a spookiness rating
-- Browse everything reported, newest first
-- Delete a report
+Pasta Perfect provides predefined pasta cooking presets with recommended cooking times for different doneness levels.
+
+Users can:
+
+- Browse available pasta presets
+- Search for a specific pasta
+- Choose between Al dente, Firm, and Soft
+- View the recommended cooking time
+- Start a countdown timer
+- Pause the timer
+- Reset the timer
+- Choose another pasta
+
+The application uses PostgreSQL to store pasta preset data and an Express API to retrieve the data.
 
 ## Built with
 
-React and Vite on the front end, Express and PostgreSQL on the back end. The
-client is on GitHub Pages, the API on (host), the database on (host).
+- React
+- Vite
+- React Router
+- Express
+- PostgreSQL
+- Node.js
 
-## Demo mode
+The front end is located in `client/` and the Express API is located in `server/`.
 
-This repository can run two ways, chosen by one environment variable at **build**
-time.
+## How it works
 
-**Demo mode is the default.** Only the exact string `false` turns it off, so a
-forgotten or mistyped variable leaves you on the simulated backend with a visible
-notice rather than on a silently broken build.
+The application follows a client-server-database architecture.
 
-| `VITE_USE_MOCK_API` | What happens |
-| --- | --- |
-| unset, or `true` | The client answers its own requests from `localStorage`. No server, no database, nothing shared between visitors. This is what the template ships with, so the GitHub Pages link works on day one. |
-| `false` | The client calls the Express API at `VITE_API_BASE_URL`, which reads and writes real PostgreSQL. |
+The React client provides the user interface and sends requests to the Express API.
 
-**Demo mode is a starting point and a fallback, not a finished project.** Your
-finals submission is all three pieces deployed and talking to each other. Demo
-mode is there so you can build the interface in week one before the API exists,
-and so you have something to show if a free tier is asleep during your demo.
+The Express server handles API requests and communicates with PostgreSQL.
 
-GitHub Pages serves files and cannot run Node, so the API and the database can
-never live there. They go somewhere else:
+PostgreSQL stores the pasta preset information.
 
-| Piece | Options |
-| --- | --- |
-| **API** | Render, Railway, Fly.io, Koyeb, a VPS, or [self-hosted behind a tunnel](../content/extending-your-app/11-self-hosting.md) |
-| **Database** | Neon, Supabase, Railway, Aiven, or your own PostgreSQL |
+```text
+User
+  |
+  v
+React + Vite
+  |
+  | HTTP request
+  v
+Express API
+  |
+  | SQL query
+  v
+PostgreSQL
+````
 
-`content/extending-your-app/` in your course workspace walks through all of it.
-Page 10 is the decision page if you do not know which to pick.
+## API
 
-## Running it yourself
+### Get all pasta presets
 
-**The client only, in demo mode.** No database needed.
+```text
+GET /api/pasta
+```
 
-    cd client
-    npm install
-    cp .env.example .env        # VITE_USE_MOCK_API stays true
-    npm run dev                 # http://localhost:5173
+The endpoint returns all available pasta presets.
 
-**The whole stack.** Needs a PostgreSQL, either local or hosted.
+### Search pasta presets
 
-    # 1. the database
-    docker run --name my-pg -e POSTGRES_PASSWORD=devpassword \
-      -e POSTGRES_DB=haunted -p 5432:5432 -d postgres:17
+```text
+GET /api/pasta?search=spaghetti
+```
 
-    # 2. the API
-    cd server
-    npm install
-    cp .env.example .env        # check DATABASE_URL
-    npm run db:reset            # creates the tables and adds sample rows
-    npm run dev                 # http://localhost:3000
+The search parameter can be used to find pasta presets by name.
 
-    # 3. the client, in another terminal
-    cd client
-    npm install
-    cp .env.example .env
-    # set VITE_USE_MOCK_API=false
-    npm run dev
+### Get one pasta preset
 
-Check the API on its own before you blame the client:
+```text
+GET /api/pasta/:id
+```
 
-    curl http://localhost:3000/healthz     # is the process alive
-    curl http://localhost:3000/readyz      # is the database reachable
-    curl http://localhost:3000/api/sightings
+Returns a single pasta preset using its ID.
+
+### Health check
+
+```text
+GET /healthz
+```
+
+Confirms that the Express API is running.
+
+### Database readiness check
+
+```text
+GET /readyz
+```
+
+Checks whether the API can connect to PostgreSQL.
+
+## Database
+
+Pasta Perfect uses PostgreSQL.
+
+The main database table is:
+
+```text
+pasta
+```
+
+It contains the following fields:
+
+| Column             | Type    | Description           |
+| ------------------ | ------- | --------------------- |
+| `id`               | SERIAL  | Unique pasta ID       |
+| `name`             | TEXT    | Pasta name            |
+| `image`            | TEXT    | Image reference       |
+| `al_dente_seconds` | INTEGER | Al dente cooking time |
+| `firm_seconds`     | INTEGER | Firm cooking time     |
+| `soft_seconds`     | INTEGER | Soft cooking time     |
+
+The database schema is located at:
+
+```text
+server/db/schema.sql
+```
+
+Sample development data is located at:
+
+```text
+server/db/seed.sql
+```
+
+## Running the project locally
+
+### PostgreSQL
+
+Pasta Perfect requires PostgreSQL to be running.
+
+The server database connection is configured in:
+
+```text
+server/.env
+```
+
+Example:
+
+```env
+DATABASE_URL=postgresql://postgres:devpassword@localhost:5432/pasta_perfect
+CORS_ORIGINS=http://localhost:5173
+NODE_ENV=development
+```
+
+Do not commit `.env` to GitHub.
+
+### Install server dependencies
+
+```powershell
+cd D:\APSI\PastaPerfect\server
+npm install
+```
+
+### Create the database tables
+
+```powershell
+node --env-file=.env db/run.js db/schema.sql
+```
+
+### Add sample pasta data
+
+```powershell
+node --env-file=.env db/run.js db/seed.sql
+```
+
+### Start the API
+
+```powershell
+npm run dev
+```
+
+The API normally runs at:
+
+```text
+http://localhost:3000
+```
+
+Test it with:
+
+```powershell
+Invoke-RestMethod http://localhost:3000/api/pasta
+```
+
+### Start the client
+
+Open another PowerShell window:
+
+```powershell
+cd D:\APSI\PastaPerfect\client
+npm install
+npm run dev
+```
+
+The Vite development server normally runs at:
+
+```text
+http://localhost:5173
+```
 
 ## Environment variables
 
-None of these are committed. `.env.example` in each folder lists them with
-placeholder values.
+### Server
 
-| Name | Where | What it is |
-| --- | --- | --- |
-| `DATABASE_URL` | server | PostgreSQL connection string. Contains a password |
-| `CORS_ORIGINS` | server | comma-separated origins allowed to call the API |
-| `NODE_ENV` | server | `production` on your host |
-| `PORT` | server | **set by the host**, do not set it yourself |
-| `VITE_USE_MOCK_API` | client, at build time | only `false` turns demo mode off; unset means on |
-| `VITE_API_BASE_URL` | client, at build time | your API's public URL, no trailing slash |
+| Variable       | Purpose                      |
+| -------------- | ---------------------------- |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `CORS_ORIGINS` | Allowed browser origins      |
+| `NODE_ENV`     | Application environment      |
+| `PORT`         | Port used by the API         |
 
-Every `VITE_` value is compiled into the built JavaScript and is **public**.
-Never put a key, a password or a connection string in one.
+### Client
 
-## Deploying
+| Variable            | Purpose             |
+| ------------------- | ------------------- |
+| `VITE_API_BASE_URL` | Public API base URL |
 
-**Client, to GitHub Pages.** Already wired up in
-`.github/workflows/deploy-pages.yml`. Two one-time steps:
+Variables beginning with `VITE_` are included in the browser build.
 
-1. **Settings > Pages > Build and deployment > Source: GitHub Actions.** Without
-   this the workflow goes green and publishes nothing.
-2. Nothing else, until your API is live. Demo mode is the default, so the first
-   deploy works on its own. When the API is up, add `VITE_USE_MOCK_API` = `false`
-   and `VITE_API_BASE_URL` under **Settings > Secrets and variables > Actions >
-   Variables**, then re-run the workflow.
+Do not put passwords, database credentials, or private API keys in `VITE_` variables.
 
-The repository must be **public** for Pages to serve it on a free account.
+## Production build
 
-**API and database.** Not automated here, because most hosts deploy straight from
-your repository with no workflow at all. Point your host at the `server/` folder,
-set the environment variables in its dashboard, and run `server/db/schema.sql`
-once against the hosted database.
+To create a production build:
+
+```powershell
+cd client
+npm run build
+```
+
+The production files are generated in:
+
+```text
+client/dist/
+```
+
+The project also creates a `404.html` file from `index.html` to support client-side routing when deployed to static hosting.
 
 ## Project structure
 
-    client/          React front end, built by Vite
-      src/api/       ONE interface, two implementations, chosen by a variable
-      src/components/
-    server/          Express API
-      db/            pool, schema.sql, seed.sql, and a runner for them
-    compose.yml      only if you self-host
-    docs/            your planning documents and weekly reports
+```text
+PastaPerfect/
+│
+├── client/
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── httpApi.js
+│   │   │   ├── index.js
+│   │   │   ├── mockApi.js
+│   │   │   └── seed.json
+│   │   │
+│   │   ├── components/
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Cook.jsx
+│   │   │   ├── Home.jsx
+│   │   │   └── Presets.jsx
+│   │   │
+│   │   └── App.jsx
+│   │
+│   └── package.json
+│
+├── server/
+│   ├── db/
+│   │   ├── pool.js
+│   │   ├── run.js
+│   │   ├── schema.sql
+│   │   └── seed.sql
+│   │
+│   ├── pastaRepo.js
+│   ├── server.js
+│   ├── .env.example
+│   └── package.json
+│
+├── compose.yml
+├── README.md
+└── LICENSE
+```
 
 ## Architecture
 
-Three or four sentences, or a small diagram. Which piece talks to which, and
-where each one is hosted.
+Pasta Perfect has three main layers.
+
+The React client is responsible for the user interface, pasta selection, doneness selection, and timer.
+
+The Express API is responsible for handling requests from the client.
+
+The PostgreSQL database stores the pasta preset information.
+
+```text
+React Client
+     |
+     | HTTP
+     v
+Express Server
+     |
+     | SQL
+     v
+PostgreSQL
+```
+
+The database queries are kept in `server/pastaRepo.js`, separating database access from the Express routes.
+
+## Security
+
+The server uses parameterized PostgreSQL queries.
+
+Database values are passed to PostgreSQL as parameters instead of being directly inserted into SQL strings.
+
+The PostgreSQL connection string is stored in `.env` locally.
+
+Production database credentials should be configured through the hosting provider's environment variables.
+
+The `.env` file should never be committed to GitHub.
+
+CORS is also configured using the `CORS_ORIGINS` environment variable.
+
+## Current status
+
+The current Pasta Perfect implementation includes:
+
+* Pasta preset selection
+* Pasta search
+* Doneness selection
+* Al dente, Firm, and Soft cooking times
+* Countdown timer
+* Start control
+* Pause control
+* Reset control
+* Express API
+* PostgreSQL database
+* PostgreSQL repository layer
+* Database schema
+* Development seed data
+* Production client build
+
+The client production build has been tested successfully using:
+
+```powershell
+npm run build
+```
 
 ## What I would do next
 
-Three honest bullets. This paragraph is worth more than it looks.
+* Deploy the Express API.
+* Connect the production client to the deployed API.
+* Test the complete client → API → PostgreSQL flow in production.
+* Add the final live API URL to this README.
+* Add the final screenshot.
+* Record and link the project demonstration video.
 
 ## Author
 
-Your name, and a link. Course and section.
+Roki
+
+APSI - Pasta Perfect
 
 ## AI use
 
-If you used AI while building this, say so here. Honest disclosure is the
-standard in this course and increasingly outside it, and reporting heavy use
-accurately costs you nothing.
+This project was developed with AI assistance.
 
-This section is the last 10 points of the finals badge, and it wants three
-things:
+AI was used to assist with code implementation, debugging, project structure, documentation, and development guidance.
+
+The project code was reviewed and tested during development, and implementation decisions were made as part of the development process.
+
+Detailed AI usage information is documented in:
+
+[AI-USAGE.md](AI-USAGE.md)
 
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
-
-- the badge above, or one you like better
-- a line naming which assistant you used and how much of the work it touched
-- a link to [AI-USAGE.md](AI-USAGE.md), where the full account lives
-
-Keep the detail in `AI-USAGE.md` rather than here. This section is the summary a
-visitor reads; that file is the record the badge is graded from.
-
-## Licence
-
-MIT, see [LICENSE](LICENSE). Put your own name in it.
