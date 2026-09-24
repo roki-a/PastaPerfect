@@ -1,11 +1,14 @@
-import DemoNotice from './components/DemoNotice.jsx'
-import Home from './pages/Home.jsx'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Presets from './pages/Presets'
+import Cook from './pages/Cook'
 
 export default function App() {
   return (
-    <>
-      <DemoNotice />
-      <Home />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Presets />} />
+        <Route path="/cook" element={<Cook />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
