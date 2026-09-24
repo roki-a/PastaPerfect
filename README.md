@@ -1,48 +1,48 @@
 # Pasta Perfect
 
-Pasta Perfect is a web application that helps users choose a pasta preset, select their preferred doneness, and cook pasta using a simple countdown timer.
+Pasta Perfect is a full-stack web application that helps users choose a pasta preset, select their preferred doneness, and cook pasta using a simple countdown timer.
 
-**Live site:** https://roki-a.github.io/pasta-perfect/
+The project is being developed based on the Pasta Perfect V8 design.
+
+**Live site:** [https://roki-a.github.io/pasta-perfect/](https://roki-a.github.io/pasta-perfect/)
 
 **API:** Not deployed yet
 
-**Demo video:** Add your demo video link here
-
-![Pasta Perfect screenshot](docs/assets/screenshot.png)
+**Demo video:** Add demo video link here
 
 ## What it does
 
-Pasta Perfect provides predefined pasta cooking presets with recommended cooking times for different doneness levels.
+Pasta Perfect provides pasta cooking presets with recommended cooking times for different doneness levels.
 
 Users can:
 
-- Browse available pasta presets
-- Search for a specific pasta
-- Choose between Al dente, Firm, and Soft
-- View the recommended cooking time
-- Start a countdown timer
-- Pause the timer
-- Reset the timer
-- Choose another pasta
+* Browse available pasta presets
+* Search for a specific pasta
+* Choose between Al dente, Firm, and Soft
+* View the recommended cooking time
+* Start a countdown timer
+* Pause the timer
+* Reset the timer
+* Choose another pasta
 
-The application uses PostgreSQL to store pasta preset data and an Express API to retrieve the data.
+The application uses PostgreSQL to store pasta preset data and an Express API to provide the data to the React client.
 
 ## Built with
 
-- React
-- Vite
-- React Router
-- Express
-- PostgreSQL
-- Node.js
+* React
+* Vite
+* React Router
+* Express
+* PostgreSQL
+* Node.js
 
-The front end is located in `client/` and the Express API is located in `server/`.
+The frontend is located in `client/` and the Express API is located in `server/`.
 
 ## How it works
 
 The application follows a client-server-database architecture.
 
-The React client provides the user interface and sends requests to the Express API.
+The React client provides the user interface and sends HTTP requests to the Express API.
 
 The Express server handles API requests and communicates with PostgreSQL.
 
@@ -61,7 +61,7 @@ Express API
   | SQL query
   v
 PostgreSQL
-````
+```
 
 ## API
 
@@ -71,7 +71,7 @@ PostgreSQL
 GET /api/pasta
 ```
 
-The endpoint returns all available pasta presets.
+Returns all available pasta presets.
 
 ### Search pasta presets
 
@@ -79,7 +79,7 @@ The endpoint returns all available pasta presets.
 GET /api/pasta?search=spaghetti
 ```
 
-The search parameter can be used to find pasta presets by name.
+Returns pasta presets matching the search term.
 
 ### Get one pasta preset
 
@@ -115,13 +115,13 @@ The main database table is:
 pasta
 ```
 
-It contains the following fields:
+It contains:
 
 | Column             | Type    | Description           |
 | ------------------ | ------- | --------------------- |
 | `id`               | SERIAL  | Unique pasta ID       |
 | `name`             | TEXT    | Pasta name            |
-| `image`            | TEXT    | Image reference       |
+| `image`            | TEXT    | Pasta image reference |
 | `al_dente_seconds` | INTEGER | Al dente cooking time |
 | `firm_seconds`     | INTEGER | Firm cooking time     |
 | `soft_seconds`     | INTEGER | Soft cooking time     |
@@ -140,7 +140,7 @@ server/db/seed.sql
 
 ## Running the project locally
 
-### PostgreSQL
+### Server
 
 Pasta Perfect requires PostgreSQL to be running.
 
@@ -158,28 +158,28 @@ CORS_ORIGINS=http://localhost:5173
 NODE_ENV=development
 ```
 
-Do not commit `.env` to GitHub.
+Do not commit `.env` files.
 
-### Install server dependencies
+Install the server dependencies:
 
 ```powershell
 cd D:\APSI\PastaPerfect\server
 npm install
 ```
 
-### Create the database tables
+Create the database tables:
 
 ```powershell
 node --env-file=.env db/run.js db/schema.sql
 ```
 
-### Add sample pasta data
+Add the sample pasta data:
 
 ```powershell
 node --env-file=.env db/run.js db/seed.sql
 ```
 
-### Start the API
+Start the API:
 
 ```powershell
 npm run dev
@@ -191,13 +191,13 @@ The API normally runs at:
 http://localhost:3000
 ```
 
-Test it with:
+Test the API:
 
 ```powershell
 Invoke-RestMethod http://localhost:3000/api/pasta
 ```
 
-### Start the client
+### Client
 
 Open another PowerShell window:
 
@@ -213,6 +213,12 @@ The Vite development server normally runs at:
 http://localhost:5173
 ```
 
+The client uses:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000
+```
+
 ## Environment variables
 
 ### Server
@@ -226,9 +232,9 @@ http://localhost:5173
 
 ### Client
 
-| Variable            | Purpose             |
-| ------------------- | ------------------- |
-| `VITE_API_BASE_URL` | Public API base URL |
+| Variable            | Purpose      |
+| ------------------- | ------------ |
+| `VITE_API_BASE_URL` | API base URL |
 
 Variables beginning with `VITE_` are included in the browser build.
 
@@ -249,7 +255,7 @@ The production files are generated in:
 client/dist/
 ```
 
-The project also creates a `404.html` file from `index.html` to support client-side routing when deployed to static hosting.
+The project also creates a `404.html` file from `index.html` to support client-side routing when deployed to GitHub Pages.
 
 ## Project structure
 
@@ -259,21 +265,26 @@ PastaPerfect/
 ├── client/
 │   ├── src/
 │   │   ├── api/
-│   │   │   ├── httpApi.js
-│   │   │   ├── index.js
-│   │   │   ├── mockApi.js
-│   │   │   └── seed.json
+│   │   │   └── httpApi.js
 │   │   │
 │   │   ├── components/
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Header.jsx
+│   │   │   └── Layout.jsx
 │   │   │
 │   │   ├── pages/
 │   │   │   ├── Cook.jsx
 │   │   │   ├── Home.jsx
 │   │   │   └── Presets.jsx
 │   │   │
-│   │   └── App.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── styles.css
 │   │
-│   └── package.json
+│   ├── .env.example
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
 │
 ├── server/
 │   ├── db/
@@ -287,6 +298,18 @@ PastaPerfect/
 │   ├── .env.example
 │   └── package.json
 │
+├── docs/
+│   ├── 01-proposal.md
+│   ├── 02-mockup.md
+│   ├── 03-design-system.md
+│   ├── 04-weekly-reports.md
+│   ├── 05-demo-video.md
+│   └── 06-security-and-privacy.md
+│
+├── .github/
+│   └── workflows/
+│       └── deploy-pages.yml
+│
 ├── compose.yml
 ├── README.md
 └── LICENSE
@@ -296,7 +319,7 @@ PastaPerfect/
 
 Pasta Perfect has three main layers.
 
-The React client is responsible for the user interface, pasta selection, doneness selection, and timer.
+The React client is responsible for the user interface, pasta selection, doneness selection, and cooking timer.
 
 The Express API is responsible for handling requests from the client.
 
@@ -314,7 +337,13 @@ Express Server
 PostgreSQL
 ```
 
-The database queries are kept in `server/pastaRepo.js`, separating database access from the Express routes.
+Database queries are kept in:
+
+```text
+server/pastaRepo.js
+```
+
+This separates database access from the Express routes.
 
 ## Security
 
@@ -328,11 +357,11 @@ Production database credentials should be configured through the hosting provide
 
 The `.env` file should never be committed to GitHub.
 
-CORS is also configured using the `CORS_ORIGINS` environment variable.
+CORS is configured using the `CORS_ORIGINS` environment variable.
 
 ## Current status
 
-The current Pasta Perfect implementation includes:
+The current project includes:
 
 * Pasta preset selection
 * Pasta search
@@ -348,27 +377,107 @@ The current Pasta Perfect implementation includes:
 * Database schema
 * Development seed data
 * Production client build
+* GitHub Pages deployment configuration
 
-The client production build has been tested successfully using:
+The frontend is currently being rebuilt to closely match the Pasta Perfect V8 design.
 
-```powershell
-npm run build
+## Development plan
+
+### Stage 1 — UI/UX
+
+Rebuild the frontend according to the Pasta Perfect V8 design.
+
+Focus areas:
+
+* Layout
+* Typography
+* Colors
+* Navigation
+* Pasta cards
+* Search
+* Doneness controls
+* Cooking page
+* Recipe page
+* Add pasta page
+* Responsive behavior
+
+### Stage 2 — Frontend functionality
+
+Implement and test the main user interactions:
+
+* Search pasta
+* Select doneness
+* Start a timer
+* Pause a timer
+* Reset a timer
+* Complete a timer
+* Add pasta
+* Edit pasta
+* Delete pasta
+* Manage recipes
+
+### Stage 3 — Backend integration
+
+Connect the completed React interface to the Express API.
+
+The backend will handle:
+
+* Pasta data
+* Pasta cooking times
+* Recipes
+* CRUD operations
+* Database communication
+
+### Stage 4 — PostgreSQL
+
+Use PostgreSQL as the application's persistent database.
+
+The schema and development seed data are located in:
+
+```text
+server/db/
 ```
 
-## What I would do next
+### Stage 5 — Testing and deployment
 
+After the application is working locally:
+
+* Test the major user flows
+* Check responsive layouts
+* Check accessibility
+* Check API behavior
+* Build the production client
+* Deploy the application
+* Verify the deployed version
+
+## Development workflow
+
+The project is developed one section at a time.
+
+1. Make the change.
+2. Run the application.
+3. Compare the result against the Pasta Perfect V8 design.
+4. Fix visual or functional problems.
+5. Test the affected functionality.
+6. Commit the working change.
+
+## Next steps
+
+* Complete the Pasta Perfect V8 frontend redesign.
+* Finish the remaining frontend functionality.
+* Test the complete client-to-API-to-PostgreSQL flow.
 * Deploy the Express API.
 * Connect the production client to the deployed API.
-* Test the complete client → API → PostgreSQL flow in production.
-* Add the final live API URL to this README.
-* Add the final screenshot.
+* Verify the production application.
+* Add the final API URL.
+* Add the final project screenshot.
 * Record and link the project demonstration video.
 
 ## Author
 
 Roki
 
-APSI - Pasta Perfect
+APSI — Pasta Perfect
 
 ## AI use
 
@@ -381,5 +490,3 @@ The project code was reviewed and tested during development, and implementation 
 Detailed AI usage information is documented in:
 
 [AI-USAGE.md](AI-USAGE.md)
-
-![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)

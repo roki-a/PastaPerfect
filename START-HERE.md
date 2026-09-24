@@ -1,153 +1,196 @@
-# Start here
+# Pasta Perfect — Start Here
 
-You have just made your own copy of this template. This file is the first hour.
-Delete it once you have worked through it.
+Pasta Perfect is a full-stack pasta cooking timer application.
 
-## What you have
+This project is being developed from the Pasta Perfect V8 design and will include:
 
-A working full-stack application, small on purpose, that you are going to replace
-with your own.
+* React frontend
+* Express backend
+* PostgreSQL database
+* Pasta presets
+* Doneness selection
+* Cooking timer
+* Saved personal pasta times
+* Recipe management
+* Responsive UI
 
+## Project structure
+
+```text
+PastaPerfect/
+├── client/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── styles.css
+│   └── package.json
+│
+├── server/
+│   ├── db/
+│   ├── pastaRepo.js
+│   ├── server.js
+│   └── package.json
+│
+├── docs/
+│   ├── 01-proposal.md
+│   ├── 02-mockup.md
+│   ├── 03-design-system.md
+│   ├── 04-weekly-reports.md
+│   ├── 05-demo-video.md
+│   └── 06-security-and-privacy.md
+│
+└── compose.yml
 ```
-client/     React, built by Vite. Deploys to GitHub Pages already.
-server/     Express and PostgreSQL. Deploys nowhere yet: that is your job.
-docs/       where your planning documents and weekly reports go
-```
 
-**It runs right now, with no database and no server**, because the client ships
-pointing at a simulated backend. That is deliberate: it means your repository has
-a live link on day one, and it means you can build your interface in week one
-without waiting on a deployment.
+## Development setup
 
-It is also **not** a finished project. Your finals submission is the React
-client, your Express API and your PostgreSQL database, all three deployed and
-reachable from a link. Read
-`content/extending-your-app/03-demo-mode-in-the-template.md` in your course
-workspace before you decide otherwise.
+The frontend is located in `client/`.
 
-## The first hour
+Run:
 
-### 1. Make it yours
-
-- [ ] **Rename the repository** to your app's name. This is your repository, in
-      your own account, so there is no `classcode-yourname` convention this time.
-- [ ] Put your name in `LICENSE`.
-- [ ] Replace `README.md` with your own. Keep the shape; change everything else.
-- [ ] Change the `<title>` and description in `client/index.html`.
-- [ ] Delete this file when you are finished with it.
-
-### 2. Run it
-
-```bash
+```powershell
 cd client
 npm install
-cp .env.example .env
 npm run dev
 ```
 
-Open http://localhost:5173. Add a sighting, reload, see it persist. That data is
-in your browser's `localStorage`, nowhere else.
+The frontend runs at:
 
-### 3. Deploy it, today
-
-Do not save this for December. Every deployment problem is twenty minutes now and
-a lost night the week before the deadline.
-
-- [ ] **Settings > General > Danger Zone:** make the repository **public**.
-      GitHub Pages will not serve a private repository on a free account.
-- [ ] **Settings > Pages > Build and deployment > Source: GitHub Actions.**
-      Miss this and the workflow runs green and publishes nothing.
-- [ ] You do not need to set any repository variable yet. Demo mode is the
-      default, so a fresh copy deploys into a working site on its own.
-- [ ] Push to `main`. Watch the Actions tab. The deploy job prints your URL.
-- [ ] Open that URL **in a private browsing window**, on your phone as well as
-      your laptop.
-
-You now have a live link. Put it at the top of your README.
-
-### 4. Link it to your workspace
-
-Your project repository is public and carries **no `student.json`** and nothing
-else that identifies you. The private pointer that connects it to you for
-grading lives in your **workspace** repository. Create `project/README.md` there:
-
-```markdown
-# My final project
-
-**Repository:** https://github.com/yourusername/your-repo-name
-**Live site:** https://yourusername.github.io/your-repo-name/
-**API:** https://your-api.onrender.com/healthz
+```text
+http://localhost:5173
 ```
 
-Without this, your project is a repository nobody can connect to a student. Do it
-the day the repository exists.
+The backend is located in `server/`.
 
-## The rest of the term
+Run:
 
-### Week one to two: make the interface yours
-
-Work entirely in `client/`, in demo mode. Change `src/api/mockApi.js` and
-`src/api/seed.json` to hold your data rather than ghost sightings, and rebuild
-`App.jsx` into your actual screens.
-
-**Keep the shape of `src/api/`.** One interface, two implementations, chosen by a
-variable. It is what makes the switch to your real API a one-line change instead
-of a rewrite. Whatever functions you end up with, make sure both files provide
-all of them.
-
-### Week two to three: a real database
-
-Read `content/extending-your-app/04-running-postgres-for-real.md`. Every test you
-passed in Module 5 ran against `pg-mem`, an imitation, so there is a good chance
-you have never actually run PostgreSQL. Close that gap early, because everything
-afterwards assumes it.
-
-```bash
+```powershell
 cd server
 npm install
-cp .env.example .env
-npm run db:reset      # creates your tables, adds sample rows
 npm run dev
-curl http://localhost:3000/readyz
 ```
 
-Edit `db/schema.sql` to be your schema, and `sightingsRepo.js` to be your
-queries. Keep every query parameterised.
+The API runs locally at:
 
-### Week three to four: get all three online
+```text
+http://localhost:3000
+```
 
-Pages 5 to 10 of the extending unit. Pick a database host, pick an API host,
-deploy both, then flip the client:
+## Environment files
 
-- `VITE_USE_MOCK_API` to `false`
-- `VITE_API_BASE_URL` to your API's URL
-- `CORS_ORIGINS` on the API to your Pages origin
+Client:
 
-Rebuild the client, because those values are compiled in at build time. The demo
-notice disappears by itself.
+```text
+client/.env
+```
 
-### The rest of the term: build your project
+Current local API configuration:
 
-One new thing at a time. Working, committed, deployed, then the next one.
+```env
+VITE_API_BASE_URL=http://localhost:3000
+```
 
-## Things that will catch you
+Server:
 
-| Symptom | Cause |
-| --- | --- |
-| Blank white page on Pages, 404s on the JavaScript | the base path. The workflow sets it; do not hardcode it |
-| Refreshing a nested route gives 404 | `404.html`. The build already copies it; do not remove that step |
-| Live site still shows demo data after deploying the API | you changed a variable but did not **rebuild** |
-| `CORS policy` in the console | `CORS_ORIGINS` on the API does not name your Pages origin exactly. An origin has no path and no trailing slash |
-| First request takes 45 seconds | your free-tier API was asleep. Expected. Say so in the interface |
-| `DATABASE_URL is not set` | you set it locally and not in the host's dashboard |
-| Deploy fails on an import that obviously exists | capitalisation. The runner is Linux and your laptop probably is not |
+```text
+server/.env
+```
 
-## The one rule
+Current local database configuration:
 
-**Never commit a secret.** This repository is public, in your own account, and
-permanent, and deleting a file does not remove it from the history. Keys,
-passwords and connection strings go in `.env`, which is git-ignored, and in your
-host's dashboard. If you ever commit one, rotate it first and clean up second.
+```env
+DATABASE_URL=postgresql://postgres:devpassword@localhost:5432/pasta_perfect
+CORS_ORIGINS=http://localhost:5173
+NODE_ENV=development
+```
 
-Page 16 of the extending unit is the full version, and it is worth ten minutes
-before your first push.
+Do not commit `.env` files.
+
+## Development order
+
+The project will be developed in stages.
+
+### Stage 1 — UI/UX
+
+Rebuild the frontend to closely match the Pasta Perfect V8 design.
+
+Focus on:
+
+* Layout
+* Typography
+* Colors
+* Navigation
+* Pasta cards
+* Search
+* Doneness controls
+* Cooking page
+* Recipe page
+* Add pasta page
+* Responsive behavior
+
+### Stage 2 — Frontend functionality
+
+Connect the UI interactions to the React application.
+
+This includes:
+
+* Searching pasta
+* Selecting doneness
+* Starting a timer
+* Completing a timer
+* Adding pasta
+* Editing pasta
+* Deleting pasta
+* Managing recipes
+
+### Stage 3 — Backend
+
+Connect the React frontend to the Express API.
+
+The backend will handle:
+
+* Pasta data
+* Pasta cooking times
+* Recipes
+* CRUD operations
+* Database communication
+
+### Stage 4 — PostgreSQL
+
+Use PostgreSQL as the project's database.
+
+The database schema and seed data are located in:
+
+```text
+server/db/
+```
+
+### Stage 5 — Testing and deployment
+
+After the application is working locally:
+
+* Test all major user flows
+* Check responsive layouts
+* Check accessibility
+* Check API behavior
+* Build the production client
+* Deploy the application
+* Verify the deployed version
+
+## Important
+
+Do not add external database or hosting services unless they are actually required by the project.
+
+The current priority is to build the Pasta Perfect application locally and make the UI closely match the V8 design before deployment.
+
+## Current development rule
+
+Work one section at a time.
+
+1. Make the change.
+2. Run the application.
+3. Check the result against the V8 design.
+4. Fix visual or functional problems.
+5. Commit the working change.
