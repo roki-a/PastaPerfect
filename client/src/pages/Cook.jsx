@@ -152,53 +152,59 @@ export default function Cook() {
             ← Back to pasta
           </Link>
 
-          <div className="timer-window">
-            <strong>{formatTime(secondsLeft)}</strong>
+          <div className="cook-timer">
+            <div className={done ? 'tomato done' : 'tomato'}>
+              <div className="stem">✦</div>
 
-            <span>
-              {done
-                ? 'Done!'
-                : running
-                  ? 'Cooking'
-                  : 'Ready'}
-            </span>
-          </div>
+              <div className="timer-window">
+                <strong>{formatTime(secondsLeft)}</strong>
 
-          <div className="timer-controls">
-            {!running && !done && (
-              <button
-                className="button"
-                type="button"
-                onClick={handleStart}
-              >
-                Start
-              </button>
-            )}
+                <span>
+                  {done
+                    ? 'Done!'
+                    : running
+                      ? 'Cooking'
+                      : 'Ready'}
+                </span>
+              </div>
+            </div>
 
-            {running && (
+            <div className="timer-controls">
+              {!running && !done && (
+                <button
+                  className="button"
+                  type="button"
+                  onClick={handleStart}
+                >
+                  Start
+                </button>
+              )}
+
+              {running && (
+                <button
+                  className="button secondary"
+                  type="button"
+                  onClick={handlePause}
+                >
+                  Pause
+                </button>
+              )}
+
               <button
                 className="button secondary"
                 type="button"
-                onClick={handlePause}
+                onClick={handleReset}
               >
-                Pause
+                Reset
               </button>
-            )}
+            </div>
 
-            <button
-              className="button secondary"
-              type="button"
-              onClick={handleReset}
-            >
-              Reset
-            </button>
+            <p className="timer-help">
+              {done
+                ? 'Your pasta timer is finished.'
+                : 'Adjust your pasta and keep an eye on the timer.'}
+            </p>
           </div>
-
-          <p className="timer-help">
-            {done
-              ? 'Your pasta timer is finished.'
-              : 'Adjust your pasta and keep an eye on the timer.'}
-          </p>
         </div>
 
         <aside className="cook-details">
