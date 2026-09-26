@@ -1,21 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from 'react-router-dom'
 
 import Presets from './pages/Presets'
 import Cook from './pages/Cook'
 import Home from './pages/Home'
+import AddPasta from './pages/AddPasta'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route
           path="/"
-          element={<Presets />}
-        />
-
-        <Route
-          path="/presets"
           element={<Presets />}
         />
 
@@ -31,9 +30,8 @@ export default function App() {
 
         <Route
           path="/presets/new"
-          element={<Home />}
+          element={<AddPasta />}
         />
-
       </Routes>
     </BrowserRouter>
   )

@@ -26,7 +26,7 @@ export default function Layout({ children }) {
             aria-label="Main navigation"
           >
             <NavLink
-              to="/presets"
+              to="/"
               className={({ isActive }) =>
                 isActive ? 'nav-link active' : 'nav-link'
               }
@@ -45,7 +45,7 @@ export default function Layout({ children }) {
           </nav>
 
           <Link
-            to="/add"
+            to="/presets/new"
             className="add-link"
           >
             + Add pasta
@@ -61,10 +61,10 @@ export default function Layout({ children }) {
       </main>
 
       <div className="checker" />
-      <footer>
 
+      <footer>
         <p>
-          Pasta Perfect · your pasta, your time.
+          Pasta Perfect· your pasta, your time.
         </p>
       </footer>
     </div>

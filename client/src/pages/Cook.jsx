@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
-import './Cook.css'
+import '../styles/Cook.css'
 
 const API = '/api'
 
@@ -74,17 +74,26 @@ const myTimeKey = (id, doneness) => `cooktimer:mytime:${id}:${doneness}`
 
 function PastaThumb({ src, name }) {
   if (src) {
+    const imageSrc = src.startsWith('data:')
+      ? src
+      : src.startsWith('/')
+        ? src
+        : `/${src}`
+
     return (
       <img
         className="pasta-thumb"
-        src={src}
+        src={imageSrc}
         alt={name}
       />
     )
   }
 
   return (
-    <div className="pasta-thumb" aria-hidden="true">
+    <div
+      className="pasta-thumb"
+      aria-hidden="true"
+    >
       <svg viewBox="0 0 118 118">
         <ellipse
           cx="59"
@@ -918,7 +927,7 @@ export default function Cook() {
           <div className="pasta-header">
 
             <PastaThumb
-              src={`/` + pasta.name.toLowerCase().replace(/\s+/g, "-") + ".png"}
+              src={pasta.image}
               name={pasta.name}
             />
 
