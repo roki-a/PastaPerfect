@@ -460,7 +460,7 @@ All AI-assisted code was reviewed, tested, adapted, and modified as needed to fi
 
 Detailed AI usage, including specific examples of AI assistance and corrections made during development, is documented in:
 
-AI-USAGE.md
+[AI-USAGE.md](AI-USAGE.md)
 
 Author
 
