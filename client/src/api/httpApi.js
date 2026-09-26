@@ -23,7 +23,7 @@ async function request(path, options = {}) {
         message = body.error
       }
     } catch {
-      // The response was not JSON.
+      // Response was not JSON.
     }
 
     throw new Error(message)
@@ -36,10 +36,37 @@ async function request(path, options = {}) {
   return response.json()
 }
 
+// ---------------------------------------------------------
+// GET ALL PASTA
+// ---------------------------------------------------------
+
 export const listPasta = (search = '') =>
   request(
     `/api/pasta?search=${encodeURIComponent(search)}`,
   )
 
+// ---------------------------------------------------------
+// GET ONE PASTA
+// ---------------------------------------------------------
+
 export const getPasta = (id) =>
   request(`/api/pasta/${id}`)
+
+// ---------------------------------------------------------
+// CREATE PASTA
+// ---------------------------------------------------------
+
+export const createPasta = (data) =>
+  request('/api/pasta', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+
+// ---------------------------------------------------------
+// DELETE USER-ADDED PASTA
+// ---------------------------------------------------------
+
+export const deletePasta = (id) =>
+  request(`/api/pasta/${id}`, {
+    method: 'DELETE',
+  })
