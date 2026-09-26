@@ -84,3 +84,39 @@ export async function deleteCustom(pool, id) {
 
   return result.rows[0] ?? null
 }
+
+export async function updateCustom(
+  pool,
+  id,
+  pasta,
+) {
+  const result = await pool.query(
+    `UPDATE pasta
+     SET
+       name = $1,
+       image = $2,
+       al_dente_seconds = $3,
+       firm_seconds = $4,
+       soft_seconds = $5
+     WHERE id = $6
+       AND is_custom = TRUE
+     RETURNING
+       id,
+       name,
+       image,
+       al_dente_seconds AS "alDenteSeconds",
+       firm_seconds AS "firmSeconds",
+       soft_seconds AS "softSeconds",
+       is_custom AS "isCustom"`,
+    [
+      pasta.name,
+      pasta.image,
+      pasta.alDenteSeconds,
+      pasta.firmSeconds,
+      pasta.softSeconds,
+      id,
+    ],
+  )
+
+  return result.rows[0] ?? null
+}

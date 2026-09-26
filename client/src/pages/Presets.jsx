@@ -154,16 +154,23 @@ function PastaCard({
           </Link>
 
           {pasta.isCustom && (
-            <button
-              type="button"
-              className="delete-pasta-button"
-              onClick={handleDelete}
-              disabled={deleting}
-            >
-              {deleting
-                ? 'Deleting...'
-                : 'Delete'}
-            </button>
+            <>
+              <Link
+                className="button"
+                to={`/pasta/${pasta.id}/edit`}
+              >
+                Edit
+              </Link>
+
+              <button
+                type="button"
+                className="delete-pasta-button"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            </>
           )}
 
         </div>

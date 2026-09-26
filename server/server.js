@@ -174,6 +174,100 @@ app.post('/api/pasta', async (request, response, next) => {
 })
 
 // ---------------------------------------------------------
+// UPDATE USER-ADDED PASTA
+// ---------------------------------------------------------
+
+// Only pasta with is_custom = TRUE can be edited.
+
+app.put(
+  '/api/pasta/:id',
+  async (request, response, next) => {
+    try {
+      const {
+        name,
+        image,
+        alDenteSeconds,
+        firmSeconds,
+        softSeconds,
+      } = request.body
+
+      if (
+        typeof name !== 'string' ||
+        !name.trim()
+      ) {
+        return response.status(400).json({
+          error: 'Pasta name is required.',
+        })
+      }
+
+      if (
+        typeof image !== 'string' ||
+        !image.trim()
+      ) {
+        return response.status(400).json({
+          error: 'Pasta image is required.',
+        })
+      }
+
+      const times = [
+        alDenteSeconds,
+        firmSeconds,
+        softSeconds,
+      ]
+
+      if (
+        times.some(
+          (value) =>
+            !Number.isInteger(value) ||
+            value <= 0,
+        )
+      ) {
+        return response.status(400).json({
+          error:
+            'Cooking times must be positive whole seconds.',
+        })
+      }
+
+      if (
+        image.startsWith('data:image/') &&
+        !image.startsWith(
+          'data:image/png;base64,',
+        )
+      ) {
+        return response.status(400).json({
+          error:
+            'Uploaded images must be PNG files.',
+        })
+      }
+
+      const updated =
+        await pasta.updateCustom(
+          pool,
+          request.params.id,
+          {
+            name: name.trim(),
+            image: image.trim(),
+            alDenteSeconds,
+            firmSeconds,
+            softSeconds,
+          },
+        )
+
+      if (!updated) {
+        return response.status(404).json({
+          error:
+            'Only added pasta can be edited.',
+        })
+      }
+
+      response.json(updated)
+    } catch (error) {
+      next(error)
+    }
+  },
+)
+
+// ---------------------------------------------------------
 // DELETE USER-ADDED PASTA
 // ---------------------------------------------------------
 

@@ -63,6 +63,15 @@ export const createPasta = (data) =>
   })
 
 // ---------------------------------------------------------
+// UPDATE PASTA
+// ---------------------------------------------------------
+export const updatePasta = (id, data) =>
+  request(`/api/pasta/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+
+// ---------------------------------------------------------
 // DELETE USER-ADDED PASTA
 // ---------------------------------------------------------
 
