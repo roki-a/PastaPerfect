@@ -1,228 +1,294 @@
 # Pasta Perfect
 
-Pasta Perfect is a full-stack web application that helps users choose a pasta preset, select their preferred doneness, and cook pasta using a simple countdown timer.
+Pasta Perfect is a full-stack web application designed to help users choose a pasta, select a preferred doneness, and cook it using a simple countdown timer.
 
-The project is being developed based on the Pasta Perfect V8 design.
+The project is based on the Pasta Perfect V8 UI/UX design and was developed as part of the APSI project.
 
-**Live site:** [https://roki-a.github.io/pasta-perfect/](https://roki-a.github.io/pasta-perfect/)
+**Live site:** https://roki-a.github.io/PastaPerfect/
 
-**API:** Not deployed yet
+**Repository:** https://github.com/roki-a/PastaPerfect
 
-**Demo video:** Add demo video link here
+**API:** Local Express API; a production API deployment is not included yet.
 
 ## What it does
 
-Pasta Perfect provides pasta cooking presets with recommended cooking times for different doneness levels.
+Pasta Perfect provides pasta presets with recommended cooking times for three doneness levels: Al dente, Firm, and Soft.
 
 Users can:
 
-* Browse available pasta presets
-* Search for a specific pasta
-* Choose between Al dente, Firm, and Soft
-* View the recommended cooking time
-* Start a countdown timer
-* Pause the timer
-* Reset the timer
-* Choose another pasta
-
-The application uses PostgreSQL to store pasta preset data and an Express API to provide the data to the React client.
+- Browse predefined pasta presets
+- Search for pasta
+- Select Al dente, Firm, or Soft doneness
+- View recommended cooking times
+- Customize cooking times for predefined pasta
+- Reset a customized predefined pasta time back to its recommended time
+- See whether a preset is using `Recommended` or `My time`
+- Start, pause, and reset the cooking timer
+- Add a custom pasta
+- Upload an image when adding a custom pasta
+- Edit the name and image of an added pasta
+- Delete an added pasta
+- Keep predefined pasta protected from editing and deletion
+- Browse the Recipes page
+- Expand recipes to view ingredients and cooking steps
+- Open the cooking page from supported recipes
 
 ## Built with
 
-* React
-* Vite
-* React Router
-* Express
-* PostgreSQL
-* Node.js
+- React
+- Vite
+- React Router
+- Express
+- PostgreSQL
+- Node.js
+- GitHub Pages for the frontend deployment
 
-The frontend is located in `client/` and the Express API is located in `server/`.
+## Application Architecture
 
-## How it works
+The project uses a client-server-database architecture:
 
-The application follows a client-server-database architecture.
-
-The React client provides the user interface and sends HTTP requests to the Express API.
-
-The Express server handles API requests and communicates with PostgreSQL.
-
-PostgreSQL stores the pasta preset information.
-
-```text
+```
 User
   |
   v
-React + Vite
+React + Vite Client
   |
-  | HTTP request
+  | HTTP requests
   v
 Express API
   |
-  | SQL query
+  | SQL queries
   v
 PostgreSQL
 ```
+The React client handles the interface and user interactions.
 
-## API
+The Express API handles pasta-related requests and validation.
 
-### Get all pasta presets
+PostgreSQL stores the pasta data.
 
-```text
+Main Application Pages
+Pasta Presets
+
+The main page lets users search and browse pasta presets, choose a doneness, view the current cooking time, and start cooking.
+
+The application distinguishes between predefined pasta and user-added pasta.
+
+Predefined pasta can have its cooking time customized, but its name and image cannot be edited or deleted.
+
+User-added pasta can be edited and deleted.
+
+Cooking Timer
+
+The cooking page provides a countdown timer for the selected pasta and doneness.
+
+Users can:
+```
+Start the timer
+Pause the timer
+Reset the timer
+Adjust the cooking time
+```
+The tomato timer interaction was refined so dragging left decreases the cooking time and dragging right increases it, with the ruler indicator following the drag direction.
+
+Add Pasta
+
+Users can create their own pasta by providing:
+```
+Pasta name
+Pasta image
+Al dente cooking time
+Firm cooking time
+Soft cooking time
+```
+Uploaded pasta images are handled as PNG image data URLs by the API.
+
+Edit Pasta
+
+Only user-added pasta can be edited.
+
+Users can change the:
+```
+Pasta name
+Pasta image
+```
+Predefined pasta cannot be edited as a custom pasta.
+
+Delete Pasta
+
+Only user-added pasta can be deleted.
+
+Predefined pasta is protected from deletion.
+
+Recipes
+
+The Recipes page contains recipe cards with:
+```
+Recipe images
+Recipe descriptions
+Preparation information
+Recommended doneness
+Ingredients
+Cooking steps
+```
+Recipes can be expanded and collapsed.
+
+Supported recipes also provide a link to cook the associated pasta.
+
+API
+
+The Express API is located in server/.
+```
+Get all pasta
 GET /api/pasta
 ```
-
-Returns all available pasta presets.
-
-### Search pasta presets
-
-```text
+Returns the available pasta records.
+```
+Search pasta
 GET /api/pasta?search=spaghetti
 ```
-
-Returns pasta presets matching the search term.
-
-### Get one pasta preset
-
-```text
+Returns pasta records matching the search term.
+```
+Get one pasta
 GET /api/pasta/:id
 ```
+Returns one pasta record by ID.
+```
+Create custom pasta
+POST /api/pasta
+```
+Creates a user-added pasta after validating its name, image, and cooking times.
+```
+Edit custom pasta
+PUT /api/pasta/:id
+```
+Updates the name and image of a user-added pasta.
 
-Returns a single pasta preset using its ID.
+The backend only allows this operation for custom pasta.
+```
+Update predefined cooking time
+PUT /api/pasta/:id/time
+```
+Updates the cooking times of a predefined pasta.
+```
+Reset predefined cooking time
+POST /api/pasta/:id/reset-time
+```
+Resets a predefined pasta's customized cooking times back to its recommended values.
+```
+Delete custom pasta
+DELETE /api/pasta/:id
+```
+Deletes a user-added pasta.
 
-### Health check
-
-```text
+Predefined pasta cannot be deleted through this route.
+```
+Health check
 GET /healthz
 ```
-
 Confirms that the Express API is running.
-
-### Database readiness check
-
-```text
+```
+Database readiness check
 GET /readyz
 ```
-
 Checks whether the API can connect to PostgreSQL.
 
-## Database
+Database
 
-Pasta Perfect uses PostgreSQL.
+Pasta Perfect uses PostgreSQL for persistent pasta data.
 
-The main database table is:
+The main table is:
 
-```text
 pasta
-```
 
-It contains:
-
-| Column             | Type    | Description           |
-| ------------------ | ------- | --------------------- |
-| `id`               | SERIAL  | Unique pasta ID       |
-| `name`             | TEXT    | Pasta name            |
-| `image`            | TEXT    | Pasta image reference |
-| `al_dente_seconds` | INTEGER | Al dente cooking time |
-| `firm_seconds`     | INTEGER | Firm cooking time     |
-| `soft_seconds`     | INTEGER | Soft cooking time     |
+It contains pasta information including:
+| Column                    | Type    | Description                            |
+| ------------------------- | ------- | -------------------------------------- |
+| `id`                      | SERIAL  | Unique pasta ID                        |
+| `name`                    | TEXT    | Pasta name                             |
+| `image`                   | TEXT    | Pasta image reference or image data    |
+| `al_dente_seconds`        | INTEGER | Recommended Al dente time              |
+| `firm_seconds`            | INTEGER | Recommended Firm time                  |
+| `soft_seconds`            | INTEGER | Recommended Soft time                  |
+| `custom_al_dente_seconds` | INTEGER | User-customized Al dente time when set |
+| `custom_firm_seconds`     | INTEGER | User-customized Firm time when set     |
+| `custom_soft_seconds`     | INTEGER | User-customized Soft time when set     |
+| `is_custom`               | BOOLEAN | Identifies user-added pasta            |
 
 The database schema is located at:
-
-```text
+```
 server/db/schema.sql
 ```
-
-Sample development data is located at:
-
-```text
+Development seed data is located at:
+```
 server/db/seed.sql
 ```
-
-## Running the project locally
-
-### Server
+Running the Project Locally
+1. Start PostgreSQL
 
 Pasta Perfect requires PostgreSQL to be running.
 
-The server database connection is configured in:
-
-```text
+Configure the server connection in:
+```
 server/.env
 ```
-
 Example:
-
-```env
-DATABASE_URL=postgresql://postgres:devpassword@localhost:5432/pasta_perfect
-CORS_ORIGINS=http://localhost:5173
+```
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/pasta_perfect
+CORS_ORIGINS=http://localhost:5173,http://localhost:4173
 NODE_ENV=development
+PORT=3000
 ```
+Do not commit .env files.
 
-Do not commit `.env` files.
-
-Install the server dependencies:
-
-```powershell
+2. Install Server Dependencies```
 cd D:\APSI\PastaPerfect\server
-npm install
-```
-
-Create the database tables:
-
-```powershell
-node --env-file=.env db/run.js db/schema.sql
-```
-
-Add the sample pasta data:
-
-```powershell
-node --env-file=.env db/run.js db/seed.sql
-```
-
-Start the API:
-
-```powershell
-npm run dev
-```
+npm install```
+4. Create the Database Tables```
+node --env-file=.env db/run.js db/schema.sql```
+5. Add the Development Seed Data```
+node --env-file=.env db/run.js db/seed.sql```
+6. Start the Express API```
+npm run dev```
 
 The API normally runs at:
-
-```text
+```
 http://localhost:3000
 ```
-
-Test the API:
-
-```powershell
+Test it with:
+```
 Invoke-RestMethod http://localhost:3000/api/pasta
 ```
-
-### Client
+You can also check:
+```
+http://localhost:3000/healthz
+http://localhost:3000/readyz
+```
+6. Start the React Client
 
 Open another PowerShell window:
-
-```powershell
+```
 cd D:\APSI\PastaPerfect\client
 npm install
 npm run dev
 ```
-
 The Vite development server normally runs at:
-
-```text
+```
 http://localhost:5173
 ```
-
-The client uses:
-
-```env
-VITE_API_BASE_URL=http://localhost:3000
+For a production preview:
 ```
+npm run build
+npm run preview
+```
+The preview server normally runs at:
+```
+http://localhost:4173
+```
+The client API base URL is configured through:
 
-## Environment variables
-
-### Server
-
+VITE_API_BASE_URL=http://localhost:3000
+Environment Variables
 | Variable       | Purpose                      |
 | -------------- | ---------------------------- |
 | `DATABASE_URL` | PostgreSQL connection string |
@@ -230,39 +296,46 @@ VITE_API_BASE_URL=http://localhost:3000
 | `NODE_ENV`     | Application environment      |
 | `PORT`         | Port used by the API         |
 
-### Client
+Client
+| Variable            | Purpose              |
+| ------------------- | -------------------- |
+| `VITE_API_BASE_URL` | Express API base URL |
 
-| Variable            | Purpose      |
-| ------------------- | ------------ |
-| `VITE_API_BASE_URL` | API base URL |
 
-Variables beginning with `VITE_` are included in the browser build.
+Variables beginning with VITE_ are included in the browser build.
 
-Do not put passwords, database credentials, or private API keys in `VITE_` variables.
+Do not put passwords, database credentials, or private API keys in VITE_ variables.
 
-## Production build
+Production Build and Deployment
 
-To create a production build:
+The frontend is built with Vite:
 
-```powershell
 cd client
 npm run build
-```
 
 The production files are generated in:
 
-```text
 client/dist/
-```
 
-The project also creates a `404.html` file from `index.html` to support client-side routing when deployed to GitHub Pages.
+The project includes GitHub Pages deployment configuration under:
 
-## Project structure
+.github/workflows/deploy-pages.yml
 
-```text
+The deployed frontend is available at:
+
+https://roki-a.github.io/PastaPerfect/
+
+The current GitHub Pages deployment is for the React frontend.
+
+The Express/PostgreSQL API remains a local development service until it is deployed separately.
+
+Project Structure
 PastaPerfect/
 │
 ├── client/
+│   ├── public/
+│   │   └── pasta and recipe images
+│   │
 │   ├── src/
 │   │   ├── api/
 │   │   │   └── httpApi.js
@@ -273,13 +346,17 @@ PastaPerfect/
 │   │   │   └── Layout.jsx
 │   │   │
 │   │   ├── pages/
+│   │   │   ├── AddPasta.jsx
 │   │   │   ├── Cook.jsx
-│   │   │   ├── Home.jsx
-│   │   │   └── Presets.jsx
+│   │   │   ├── EditPasta.jsx
+│   │   │   ├── Presets.jsx
+│   │   │   └── Recipes.jsx
+│   │   │
+│   │   ├── styles/
+│   │   │   └── page-specific stylesheets
 │   │   │
 │   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── styles.css
+│   │   └── main.jsx
 │   │
 │   ├── .env.example
 │   ├── index.html
@@ -299,12 +376,6 @@ PastaPerfect/
 │   └── package.json
 │
 ├── docs/
-│   ├── 01-proposal.md
-│   ├── 02-mockup.md
-│   ├── 03-design-system.md
-│   ├── 04-weekly-reports.md
-│   ├── 05-demo-video.md
-│   └── 06-security-and-privacy.md
 │
 ├── .github/
 │   └── workflows/
@@ -312,181 +383,80 @@ PastaPerfect/
 │
 ├── compose.yml
 ├── README.md
+├── AI-USAGE.md
 └── LICENSE
-```
+Security
 
-## Architecture
+The server uses parameterized PostgreSQL queries through the repository layer.
 
-Pasta Perfect has three main layers.
+Database credentials are stored in the local .env file and should not be committed to GitHub.
 
-The React client is responsible for the user interface, pasta selection, doneness selection, and cooking timer.
+CORS is configured using the CORS_ORIGINS environment variable.
 
-The Express API is responsible for handling requests from the client.
+The API validates pasta names, images, and cooking times before writing data to PostgreSQL.
 
-The PostgreSQL database stores the pasta preset information.
+The API also prevents the custom-pasta edit and delete routes from modifying predefined pasta.
 
-```text
-React Client
-     |
-     | HTTP
-     v
-Express Server
-     |
-     | SQL
-     v
-PostgreSQL
-```
+Development Workflow
 
-Database queries are kept in:
+The project was developed incrementally:
 
-```text
-server/pastaRepo.js
-```
+Build and refine the UI/UX.
+Implement navigation and routing.
+Connect pasta presets to PostgreSQL through the Express API.
+Implement the cooking timer.
+Add custom pasta creation, editing, and deletion.
+Add cooking-time customization and reset behavior.
+Add the Recipes page.
+Test responsive layouts and user interactions.
+Build the production frontend.
+Deploy the frontend through GitHub Pages.
 
-This separates database access from the Express routes.
+Changes were tested locally before being committed to the repository.
 
-## Security
+Current Status
 
-The server uses parameterized PostgreSQL queries.
+The main Pasta Perfect frontend functionality is implemented and the React client is deployed through GitHub Pages.
 
-Database values are passed to PostgreSQL as parameters instead of being directly inserted into SQL strings.
+Completed functionality includes:
 
-The PostgreSQL connection string is stored in `.env` locally.
+Pasta preset browsing
+Pasta search
+Doneness selection
+Recommended cooking times
+Custom cooking times for predefined pasta
+My time / Recommended status handling
+Reset to recommended cooking time
+Countdown timer
+Start, pause, and reset timer controls
+Custom pasta creation
+Custom pasta image upload
+Custom pasta editing
+Custom pasta deletion
+Protection of predefined pasta from editing/deletion
+Recipes page
+Expandable recipe details
+Responsive UI adjustments
+Express API
+PostgreSQL database integration
+GitHub Pages frontend deployment
 
-Production database credentials should be configured through the hosting provider's environment variables.
+The Express/PostgreSQL API is currently intended for local development and has not been deployed as a production backend.
 
-The `.env` file should never be committed to GitHub.
+AI Use
 
-CORS is configured using the `CORS_ORIGINS` environment variable.
+This project was developed with assistance from AI tools, primarily ChatGPT and Claude.
 
-## Current status
+AI was used for planning, explaining code, debugging, reviewing implementation decisions, and assisting with UI and interaction development.
 
-The current project includes:
+All AI-assisted code was reviewed, tested, adapted, and modified as needed to fit the Pasta Perfect project and UI/UX design.
 
-* Pasta preset selection
-* Pasta search
-* Doneness selection
-* Al dente, Firm, and Soft cooking times
-* Countdown timer
-* Start control
-* Pause control
-* Reset control
-* Express API
-* PostgreSQL database
-* PostgreSQL repository layer
-* Database schema
-* Development seed data
-* Production client build
-* GitHub Pages deployment configuration
+Detailed AI usage, including specific examples of AI assistance and corrections made during development, is documented in:
 
-The frontend is currently being rebuilt to closely match the Pasta Perfect V8 design.
+AI-USAGE.md
 
-## Development plan
-
-### Stage 1 — UI/UX
-
-Rebuild the frontend according to the Pasta Perfect V8 design.
-
-Focus areas:
-
-* Layout
-* Typography
-* Colors
-* Navigation
-* Pasta cards
-* Search
-* Doneness controls
-* Cooking page
-* Recipe page
-* Add pasta page
-* Responsive behavior
-
-### Stage 2 — Frontend functionality
-
-Implement and test the main user interactions:
-
-* Search pasta
-* Select doneness
-* Start a timer
-* Pause a timer
-* Reset a timer
-* Complete a timer
-* Add pasta
-* Edit pasta
-* Delete pasta
-* Manage recipes
-
-### Stage 3 — Backend integration
-
-Connect the completed React interface to the Express API.
-
-The backend will handle:
-
-* Pasta data
-* Pasta cooking times
-* Recipes
-* CRUD operations
-* Database communication
-
-### Stage 4 — PostgreSQL
-
-Use PostgreSQL as the application's persistent database.
-
-The schema and development seed data are located in:
-
-```text
-server/db/
-```
-
-### Stage 5 — Testing and deployment
-
-After the application is working locally:
-
-* Test the major user flows
-* Check responsive layouts
-* Check accessibility
-* Check API behavior
-* Build the production client
-* Deploy the application
-* Verify the deployed version
-
-## Development workflow
-
-The project is developed one section at a time.
-
-1. Make the change.
-2. Run the application.
-3. Compare the result against the Pasta Perfect V8 design.
-4. Fix visual or functional problems.
-5. Test the affected functionality.
-6. Commit the working change.
-
-## Next steps
-
-* Complete the Pasta Perfect V8 frontend redesign.
-* Finish the remaining frontend functionality.
-* Test the complete client-to-API-to-PostgreSQL flow.
-* Deploy the Express API.
-* Connect the production client to the deployed API.
-* Verify the production application.
-* Add the final API URL.
-* Add the final project screenshot.
-* Record and link the project demonstration video.
-
-## Author
+Author
 
 Roki
 
 APSI — Pasta Perfect
-
-## AI use
-
-This project was developed with AI assistance.
-
-AI was used to assist with code implementation, debugging, project structure, documentation, and development guidance.
-
-The project code was reviewed and tested during development, and implementation decisions were made as part of the development process.
-
-Detailed AI usage information is documented in:
-
-[AI-USAGE.md](AI-USAGE.md)
