@@ -286,19 +286,24 @@ The preview server normally runs at:
 http://localhost:4173
 ```
 The client API base URL is configured through:
-
+```
 VITE_API_BASE_URL=http://localhost:3000
-Environment Variables
-| Variable       | Purpose                      |
-| -------------- | ---------------------------- |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `CORS_ORIGINS` | Allowed browser origins      |
-| `NODE_ENV`     | Application environment      |
-| `PORT`         | Port used by the API         |
+```
+## Environment Variables
 
-Client
-| Variable            | Purpose              |
-| ------------------- | -------------------- |
+### Server
+
+| Variable | Purpose |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `CORS_ORIGINS` | Allowed browser origins |
+| `NODE_ENV` | Application environment |
+| `PORT` | Port used by the API |
+
+### Client
+
+| Variable | Purpose |
+|---|---|
 | `VITE_API_BASE_URL` | Express API base URL |
 
 
@@ -309,27 +314,28 @@ Do not put passwords, database credentials, or private API keys in VITE_ variabl
 Production Build and Deployment
 
 The frontend is built with Vite:
-
+```
 cd client
 npm run build
-
+```
 The production files are generated in:
-
+```
 client/dist/
-
+```
 The project includes GitHub Pages deployment configuration under:
-
+```
 .github/workflows/deploy-pages.yml
-
+```
 The deployed frontend is available at:
-
+```
 https://roki-a.github.io/PastaPerfect/
-
+```
 The current GitHub Pages deployment is for the React frontend.
 
 The Express/PostgreSQL API remains a local development service until it is deployed separately.
 
 Project Structure
+```
 PastaPerfect/
 │
 ├── client/
@@ -385,6 +391,7 @@ PastaPerfect/
 ├── README.md
 ├── AI-USAGE.md
 └── LICENSE
+```
 Security
 
 The server uses parameterized PostgreSQL queries through the repository layer.
@@ -401,16 +408,16 @@ Development Workflow
 
 The project was developed incrementally:
 
-Build and refine the UI/UX.
-Implement navigation and routing.
-Connect pasta presets to PostgreSQL through the Express API.
-Implement the cooking timer.
-Add custom pasta creation, editing, and deletion.
-Add cooking-time customization and reset behavior.
-Add the Recipes page.
-Test responsive layouts and user interactions.
-Build the production frontend.
-Deploy the frontend through GitHub Pages.
+- Build and refine the UI/UX.
+- Implement navigation and routing.
+- Connect pasta presets to PostgreSQL through the Express API.
+- Implement the cooking timer.
+- Add custom pasta creation, editing, and deletion.
+- Add cooking-time customization and reset behavior.
+- Add the Recipes page.
+- Test responsive layouts and user interactions.
+- Build the production frontend.
+- Deploy the frontend through GitHub Pages.
 
 Changes were tested locally before being committed to the repository.
 
@@ -420,26 +427,26 @@ The main Pasta Perfect frontend functionality is implemented and the React clien
 
 Completed functionality includes:
 
-Pasta preset browsing
-Pasta search
-Doneness selection
-Recommended cooking times
-Custom cooking times for predefined pasta
-My time / Recommended status handling
-Reset to recommended cooking time
-Countdown timer
-Start, pause, and reset timer controls
-Custom pasta creation
-Custom pasta image upload
-Custom pasta editing
-Custom pasta deletion
-Protection of predefined pasta from editing/deletion
-Recipes page
-Expandable recipe details
-Responsive UI adjustments
-Express API
-PostgreSQL database integration
-GitHub Pages frontend deployment
+- Pasta preset browsing
+- Pasta search
+- Doneness selection
+- Recommended cooking times
+- Custom cooking times for predefined pasta
+- My time / Recommended status handling
+- Reset to recommended cooking time
+- Countdown timer
+- Start, pause, and reset timer controls
+- Custom pasta creation
+- Custom pasta image upload
+- Custom pasta editing
+- Custom pasta deletion
+- Protection of predefined pasta from editing/deletion
+- Recipes page
+- Expandable recipe details
+- Responsive UI adjustments
+- Express API
+- PostgreSQL database integration
+- GitHub Pages frontend deployment
 
 The Express/PostgreSQL API is currently intended for local development and has not been deployed as a production backend.
 
