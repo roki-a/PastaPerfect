@@ -63,6 +63,20 @@ a {
   text-decoration: none;
 }
 
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  margin-top: auto;
+}
+
 button,
 input,
 select,
@@ -929,6 +943,21 @@ footer p {
 /* =========================================================
    TABLET — 2 PASTA CARDS PER ROW
    ========================================================= */
+@media (min-width: 1023px) and (max-width: 1196px) {
+  .pasta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  }
+
+  .delete-pasta-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+}
 
 @media (min-width: 641px) and (max-width: 1024px) {
 
@@ -1009,6 +1038,19 @@ footer p {
   .segments button {
     width: 100%;
     text-align: left;
+  }
+
+  .pasta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  }
+
+  .delete-pasta-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 
   /* =======================================================
@@ -1103,6 +1145,19 @@ footer p {
     font-size: 18px;
     padding: 13px 15px;
   }
+
+    .pasta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    }
+
+    .delete-pasta-row {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
 }
 
 /* =========================================================

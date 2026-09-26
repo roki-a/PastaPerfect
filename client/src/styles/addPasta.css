@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+:root {
+  --color-bg: #16330D;
+  --color-text: #16330D;
+  --color-surface: #E5DCB7;
+  --color-text-on-bg: #E5DCB7;
+  --color-primary: #701414;
+  --color-accent: #DB3E3E;
+  --color-secondary: #7EA366;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --radius: 4px;
+  --content-width: 1280px;
+}
+
 /* =========================================================
    ADD PASTA PAGE
    ========================================================= */
@@ -14,7 +36,6 @@
 .add-pasta-back {
   display: inline-block;
   margin-bottom: 8px;
-
   color: #efe7b8;
   font-weight: 700;
   text-decoration: underline;
@@ -22,15 +43,11 @@
 
 .add-pasta-label {
   display: block;
-
   width: fit-content;
-
   margin-bottom: 22px;
   padding: 3px 8px;
-
   border: 2px solid #78bd4b;
   border-radius: 4px;
-
   color: #efe7b8;
   font-size: 13px;
   font-weight: 700;
@@ -38,18 +55,14 @@
 
 .add-pasta-header h1 {
   margin: 0 0 18px;
-
   color: #efe7b8;
-
   font-size: 34px;
   line-height: 1.15;
 }
 
 .add-pasta-header p {
   margin: 0;
-
   color: #efe7b8;
-
   font-size: 16px;
 }
 
@@ -60,9 +73,7 @@
 .add-pasta-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-
   gap: 26px;
-
   align-items: stretch;
 }
 
@@ -73,24 +84,19 @@
 .add-pasta-form,
 .add-pasta-preview-panel {
   box-sizing: border-box;
-
   border: 2px dashed #efe7b8;
-
   padding: 18px;
 }
 
 .add-pasta-field {
   display: flex;
   flex-direction: column;
-
   gap: 8px;
-
   margin-bottom: 20px;
 }
 
 .add-pasta-field label {
   color: #efe7b8;
-
   font-size: 14px;
   font-weight: 700;
 }
@@ -100,25 +106,18 @@
 .add-pasta-field textarea {
   width: 100%;
   box-sizing: border-box;
-
   padding: 11px 12px;
-
   border: 2px solid #efe7b8;
-
   background: #e6dbb2;
   color: #123f19;
-
   font: inherit;
-
   border-radius: 2px;
 }
 
 .add-pasta-field input[type='file'] {
   width: 100%;
   box-sizing: border-box;
-
   color: #efe7b8;
-
   font: inherit;
 }
 
@@ -140,7 +139,6 @@
 
 .add-pasta-field small {
   color: #78bd4b;
-
   font-size: 12px;
   line-height: 1.4;
 }
@@ -148,9 +146,7 @@
 .pixel-settings {
   display: flex;
   gap: 16px;
-
   color: #78bd4b;
-
   font-size: 12px;
 }
 
@@ -164,14 +160,10 @@
 
 .add-pasta-error {
   margin: 0 0 18px;
-
   padding: 10px 12px;
-
   border: 2px solid #a91a24;
-
   background: #efe7b8;
   color: #8e1019;
-
   font-weight: 700;
 }
 
@@ -185,9 +177,7 @@
 
 .add-pasta-section h2 {
   margin: 0 0 10px;
-
   color: #efe7b8;
-
   font-size: 15px;
 }
 
@@ -198,15 +188,11 @@
 
 .doneness-tabs button {
   min-height: 42px;
-
   border: 2px solid #efe7b8;
-
   background: transparent;
   color: #efe7b8;
-
   font: inherit;
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -230,46 +216,35 @@
 .time-groups {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   gap: 14px;
-
   margin-bottom: 20px;
 }
 
 .time-group h3 {
   margin: 0 0 8px;
-
   color: #efe7b8;
-
   font-size: 13px;
 }
 
 .time-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-
   gap: 8px;
 }
 
 .time-inputs input {
   width: 100%;
   box-sizing: border-box;
-
   padding: 10px;
-
   border: 2px solid #efe7b8;
-
   background: #e6dbb2;
   color: #123f19;
-
   font: inherit;
 }
 
 .add-pasta-help {
   margin: 4px 0 22px;
-
   color: #78bd4b;
-
   font-size: 12px;
   line-height: 1.4;
 }
@@ -280,40 +255,26 @@
 
 .add-pasta-actions {
   display: flex;
-
   gap: 10px;
-
   margin-top: 18px;
 }
 
 .add-pasta-button {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   min-width: 72px;
-
   box-sizing: border-box;
-
   padding: 10px 18px;
-
   border: 2px solid #a91a24;
-
   border-radius: 4px;
-
   background: #a91a24;
   color: #efe7b8;
-
   font: inherit;
   font-weight: 700;
-
   text-decoration: none;
-
   cursor: pointer;
-
   box-shadow: 4px 4px 0 #78a05b;
-
   transition:
     transform 0.12s ease,
     box-shadow 0.12s ease;
@@ -321,23 +282,18 @@
 
 .add-pasta-button:hover {
   transform: translate(-2px, -2px);
-
   box-shadow: 6px 6px 0 #78a05b;
 }
 
 .add-pasta-button:active {
   transform: translate(2px, 2px);
-
   box-shadow: 2px 2px 0 #78a05b;
 }
 
 .add-pasta-button:disabled {
   opacity: 0.6;
-
   cursor: not-allowed;
-
   transform: none;
-
   box-shadow: 4px 4px 0 #78a05b;
 }
 
@@ -352,48 +308,34 @@
 
 .add-pasta-preview-panel h2 {
   margin: 0 0 14px;
-
   color: #78bd4b;
-
   font-size: 14px;
   font-weight: 500;
 }
 
 .pasta-preview-card {
   display: flex;
-
   min-height: 164px;
-
   box-sizing: border-box;
-
   background: #e6dbb2;
-
   border: 2px solid #d2c795;
-
   box-shadow: 5px 5px 0 #78a05b;
 }
 
 .pasta-preview-image {
   width: 110px;
-
   flex-shrink: 0;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   padding: 10px;
-
   box-sizing: border-box;
 }
 
 .pasta-preview-image img {
   width: 90px;
   height: 90px;
-
   object-fit: contain;
-
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
@@ -401,14 +343,10 @@
 .empty-preview {
   width: 72px;
   height: 72px;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   border: 2px solid #123f19;
-
   background: #d2c795;
 }
 
@@ -418,78 +356,58 @@
 
 .pasta-preview-image > span {
   color: #78bd4b;
-
   font-size: 12px;
   text-align: center;
 }
 
 .pasta-preview-content {
   flex: 1;
-
   display: flex;
   flex-direction: column;
-
   padding: 20px 14px 12px 4px;
 }
 
 .pasta-preview-content h3 {
   margin: 0 0 14px;
-
   color: #123f19;
-
   font-size: 22px;
 }
 
 .recommended-badge {
   width: fit-content;
-
   padding: 3px 7px;
-
   border: 2px solid #123f19;
-
   color: #a91a24;
-
   font-size: 11px;
   font-weight: 700;
 }
 
 .preview-bottom {
   display: flex;
-
   align-items: flex-end;
   justify-content: space-between;
-
   gap: 12px;
-
   margin-top: auto;
 }
 
 .preview-bottom strong {
   display: block;
-
   color: #8e1019;
-
   font-size: 27px;
 }
 
 .preview-bottom span {
   display: block;
-
   color: #78a05b;
-
   font-size: 12px;
 }
 
 .preview-bottom button {
   padding: 8px 18px;
-
   border: 2px solid #8e1019;
-
   border-radius: 4px;
-
   background: #a91a24;
   color: #efe7b8;
-
   font: inherit;
   font-weight: 700;
 }
@@ -511,7 +429,6 @@
 @media (max-width: 550px) {
   .add-pasta-page {
     width: calc(100% - 28px);
-
     margin-top: 24px;
   }
 

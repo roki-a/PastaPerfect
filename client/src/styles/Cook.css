@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+:root {
+  --color-bg: #16330D;
+  --color-text: #16330D;
+  --color-surface: #E5DCB7;
+  --color-text-on-bg: #E5DCB7;
+  --color-primary: #701414;
+  --color-accent: #DB3E3E;
+  --color-secondary: #7EA366;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --radius: 4px;
+  --content-width: 1280px;
+}
+
 /* =========================================================
    COOK PAGE
    ========================================================= */
@@ -8,11 +30,10 @@
 
   display: grid;
   grid-template-columns: minmax(0, 760px) minmax(360px, 1fr);
-  gap: 32px;
+  gap: var(--space-4);
 
   align-items: start;
 }
-
 
 /* =========================================================
    LEFT SIDE
@@ -27,20 +48,19 @@
 
   margin: 0 0 20px;
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
   font-size: 16px;
   font-weight: 700;
 
   text-decoration: none;
 
-  border-bottom: 2px solid #efe7b8;
+  border-bottom: 2px solid var(--color-text-on-bg);
 }
 
 .back:hover {
   color: #78bd4b;
   border-color: #78bd4b;
 }
-
 
 /* =========================================================
    TIMER BOX
@@ -54,7 +74,7 @@
 
   box-sizing: border-box;
 
-  border: 2px dashed #efe7b8;
+  border: 2px dashed var(--color-text-on-bg);
 
   display: flex;
   flex-direction: column;
@@ -63,7 +83,6 @@
 
   background: transparent;
 }
-
 
 /* =========================================================
    COOK TIMER LABEL
@@ -81,7 +100,6 @@
 
   text-align: left;
 }
-
 
 /* =========================================================
    TOMATO AREA
@@ -108,7 +126,7 @@
 }
 
 .tomato-control:focus-visible {
-  outline: 2px solid #efe7b8;
+  outline: 2px solid var(--color-text-on-bg);
   outline-offset: 6px;
 }
 
@@ -133,12 +151,11 @@
 }
 
 .tomato-status {
-  fill: #123f19;
+  fill: var(--color-text);
 
   font-size: 19px;
   font-weight: 700;
 }
-
 
 /* =========================================================
    TOMATO ANIMATION
@@ -185,7 +202,6 @@
   }
 }
 
-
 /* =========================================================
    TIMER HELP TEXT
    ========================================================= */
@@ -202,7 +218,6 @@
 
   text-align: center;
 }
-
 
 /* =========================================================
    TIMER BUTTONS
@@ -227,7 +242,6 @@
   gap: 14px;
 }
 
-
 /* =========================================================
    RIGHT SIDE
    ========================================================= */
@@ -237,13 +251,12 @@
 
   box-sizing: border-box;
 
-  padding: 24px;
+  padding: var(--space-3);
 
-  border: 2px dashed #efe7b8;
+  border: 2px dashed var(--color-text-on-bg);
 
   background: transparent;
 }
-
 
 /* =========================================================
    PASTA HEADER
@@ -268,7 +281,7 @@
 
   display: block;
 
-  background: #e6dbb2;
+  background: var(--color-surface);
 }
 
 .pasta-thumb svg {
@@ -278,20 +291,18 @@
   display: block;
 }
 
-
 /* =========================================================
    PASTA TITLE
    ========================================================= */
 
 .cook-details h1 {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-1);
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
 
   font-size: 32px;
   line-height: 1.1;
 }
-
 
 /* =========================================================
    RECOMMENDED TAG
@@ -302,7 +313,7 @@
 
   padding: 3px 8px;
 
-  background: #efe7b8;
+  background: var(--color-text-on-bg);
 
   color: #8e1019;
 
@@ -311,7 +322,6 @@
 
   border-radius: 3px;
 }
-
 
 /* =========================================================
    DONENESS TABS
@@ -325,7 +335,7 @@
 
   margin: 0 0 20px;
 
-  border: 2px solid #efe7b8;
+  border: 2px solid var(--color-text-on-bg);
 
   box-sizing: border-box;
 }
@@ -333,7 +343,7 @@
 .doneness-tab {
   padding: 12px 8px;
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
 
   font-size: 16px;
   font-weight: 600;
@@ -346,11 +356,11 @@
 }
 
 .doneness-tab + .doneness-tab {
-  border-left: 2px solid #efe7b8;
+  border-left: 2px solid var(--color-text-on-bg);
 }
 
 .doneness-tab.active {
-  background: #efe7b8;
+  background: var(--color-text-on-bg);
 
   color: #8e1019;
 }
@@ -360,7 +370,7 @@
 }
 
 .doneness-tab.active:hover {
-  background: #efe7b8;
+  background: var(--color-text-on-bg);
 }
 
 .doneness-tab:focus-visible {
@@ -368,20 +378,18 @@
   outline-offset: -4px;
 }
 
-
 /* =========================================================
    TIME INFORMATION
    ========================================================= */
 
 .cook-details .time-line {
-  margin: 0 0 16px;
+  margin: 0 0 var(--space-2);
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
 
   font-size: 16px;
   line-height: 1.45;
 }
-
 
 /* =========================================================
    NOTES
@@ -390,9 +398,9 @@
 .notes-label {
   display: block;
 
-  margin: 24px 0 8px;
+  margin: var(--space-3) 0 var(--space-1);
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
 
   font-size: 16px;
   font-weight: 700;
@@ -409,9 +417,9 @@
 
   margin: 0 0 22px;
 
-  background: #e6dbb2;
+  background: var(--color-surface);
 
-  color: #123f19;
+  color: var(--color-text);
 
   border: 2px solid #78bd4b;
 
@@ -433,7 +441,6 @@
   outline-offset: 2px;
 }
 
-
 /* =========================================================
    WIDE BUTTON
    ========================================================= */
@@ -453,7 +460,6 @@
   font-size: 16px;
 }
 
-
 /* =========================================================
    BUTTONS
    ========================================================= */
@@ -468,11 +474,11 @@
   cursor: pointer;
 
   border: 2px solid #a91a24;
-  border-radius: 4px;
+  border-radius: var(--radius);
 
   background: #a91a24;
 
-  color: #efe7b8;
+  color: var(--color-text-on-bg);
 
   font: inherit;
   font-weight: 700;
@@ -498,7 +504,7 @@
 }
 
 .cook-layout .button.secondary {
-  background: #efe7b8;
+  background: var(--color-text-on-bg);
 
   color: #8e1019;
 
@@ -508,7 +514,6 @@
 .cook-layout .button.secondary:hover {
   background: #f5edc7;
 }
-
 
 /* =========================================================
    RESPONSIVE — TABLET
@@ -520,7 +525,7 @@
 
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.6fr);
 
-    gap: 24px;
+    gap: var(--space-3);
   }
 
   .cook-timer {
@@ -540,7 +545,6 @@
     height: 84px;
   }
 }
-
 
 /* =========================================================
    RESPONSIVE — MOBILE / SINGLE COLUMN
@@ -568,7 +572,6 @@
     width: 100%;
   }
 }
-
 
 /* =========================================================
    RESPONSIVE — SMALL MOBILE

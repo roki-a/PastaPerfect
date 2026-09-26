@@ -1,7 +1,4 @@
 // Pasta Perfect API client.
-//
-// All requests to the Express backend are kept here so the
-// React pages do not need to handle API details themselves.
 
 const BASE = import.meta.env.VITE_API_BASE_URL || ''
 
@@ -63,13 +60,51 @@ export const createPasta = (data) =>
   })
 
 // ---------------------------------------------------------
-// UPDATE PASTA
+// UPDATE PASTA TIME
 // ---------------------------------------------------------
-export const updatePasta = (id, data) =>
-  request(`/api/pasta/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-  })
+
+export async function updatePastaTime(
+  id,
+  times,
+) {
+  return request(
+    `/api/pasta/${id}/time`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(times),
+    },
+  )
+}
+
+// ---------------------------------------------------------
+// RESET TIME
+// ---------------------------------------------------------
+
+export async function resetPastaTime(id) {
+  return request(
+    `/api/pasta/${id}/reset-time`,
+    {
+      method: 'POST',
+    },
+  )
+}
+
+// ---------------------------------------------------------
+// UPDATE USER-ADDED PASTA
+// ---------------------------------------------------------
+
+export async function updatePasta(
+  id,
+  data,
+) {
+  return request(
+    `/api/pasta/${id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    },
+  )
+}
 
 // ---------------------------------------------------------
 // DELETE USER-ADDED PASTA

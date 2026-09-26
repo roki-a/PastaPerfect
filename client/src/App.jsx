@@ -1,27 +1,22 @@
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Presets from './pages/Presets'
 import Cook from './pages/Cook'
-import Home from './pages/Home'
 import AddPasta from './pages/AddPasta'
 import EditPasta from './pages/EditPasta'
+import Recipes from './pages/Recipes'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Home */}
+        {/* Home / Pasta presets */}
         <Route
           path="/"
           element={<Presets />}
         />
 
-        {/* Pasta presets */}
         <Route
           path="/presets"
           element={<Presets />}
@@ -33,10 +28,15 @@ export default function App() {
           element={<AddPasta />}
         />
 
-        {/* Keep the older add route working too */}
         <Route
           path="/presets/new"
           element={<AddPasta />}
+        />
+
+        {/* Recipes */}
+        <Route
+          path="/recipes"
+          element={<Recipes />}
         />
 
         {/* Edit custom pasta */}
@@ -45,16 +45,10 @@ export default function App() {
           element={<EditPasta />}
         />
 
-        {/* Cook pasta */}
+        {/* Cooking page */}
         <Route
           path="/cook/:id"
           element={<Cook />}
-        />
-
-        {/* Recipes */}
-        <Route
-          path="/recipes"
-          element={<Home />}
         />
 
       </Routes>

@@ -1,0 +1,399 @@
+/* =========================================================
+   GLOBAL DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  --color-bg: #16330D;
+  --color-text: #16330D;
+  --color-surface: #E5DCB7;
+  --color-text-on-bg: #E5DCB7;
+  --color-primary: #701414;
+  --color-accent: #DB3E3E;
+  --color-secondary: #7EA366;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+
+  --radius: 4px;
+  --content-width: 1280px;
+}
+
+
+/* =========================================================
+   EDIT PASTA
+   ========================================================= */
+
+.edit-pasta-page {
+  width: min(1140px, 92%);
+  margin: 0 auto 70px;
+}
+
+.edit-pasta-header {
+  margin-bottom: 22px;
+}
+
+.edit-pasta-back {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--color-text-on-bg);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.edit-pasta-header h1 {
+  margin: 0 0 18px;
+  color: var(--color-text-on-bg);
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+.edit-pasta-header p {
+  margin: 0;
+  color: var(--color-text-on-bg);
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.edit-pasta-form {
+  box-sizing: border-box;
+  border: 2px dashed var(--color-text-on-bg);
+  padding: 22px;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.edit-pasta-error {
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  border: 2px solid var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PREDEFINED PASTA INFORMATION
+   ========================================================= */
+
+.edit-pasta-info {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 28px;
+  padding: 18px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-secondary);
+  box-shadow: 5px 5px 0 var(--color-secondary);
+}
+
+.edit-pasta-image {
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid var(--color-secondary);
+  background: var(--color-text-on-bg);
+}
+
+.edit-pasta-image img {
+  width: 105px;
+  height: 105px;
+  object-fit: contain;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.edit-pasta-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.edit-pasta-details h2 {
+  margin: 10px 0 8px;
+  color: var(--color-text);
+  font-size: 25px;
+}
+
+.edit-pasta-details p {
+  margin: 0 0 8px;
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.edit-pasta-details small {
+  color: var(--color-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   RECOMMENDED BADGE
+   ========================================================= */
+
+.edit-pasta-badge {
+  display: inline-block;
+  padding: 3px 8px;
+
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius);
+
+  color: var(--color-primary);
+  background: transparent;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   COOKING TIMES
+   ========================================================= */
+
+.edit-pasta-section {
+  margin: 24px 0 14px;
+}
+
+.edit-pasta-section h2 {
+  margin: 0 0 10px;
+  color: var(--color-text-on-bg);
+  font-size: 15px;
+}
+
+.edit-pasta-section p {
+  margin: 0;
+  color: var(--color-text-on-bg);
+  font-size: 14px;
+}
+
+.edit-pasta-times {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.edit-pasta-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-pasta-field label {
+  color: var(--color-text-on-bg);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.edit-pasta-field input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+
+  border: 2px solid var(--color-text-on-bg);
+  border-radius: 2px;
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  font: inherit;
+}
+
+.edit-pasta-field input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.edit-pasta-field input::placeholder {
+  color: var(--color-secondary);
+}
+
+
+/* =========================================================
+   MY TIME / RECOMMENDED STATUS
+   ========================================================= */
+
+.edit-pasta-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  margin: 22px 0;
+  padding: 12px 14px;
+
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+}
+
+.edit-pasta-status strong {
+  font-size: 14px;
+}
+
+.edit-pasta-status span {
+  font-size: 12px;
+}
+
+.edit-pasta-status.recommended {
+  color: var(--color-primary);
+}
+
+.edit-pasta-status.my-time {
+  color: var(--color-text);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.edit-pasta-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.edit-pasta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 120px;
+  box-sizing: border-box;
+
+  padding: 10px 18px;
+
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+
+  background: var(--color-primary);
+  color: var(--color-text-on-bg);
+
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  box-shadow: 4px 4px 0 var(--color-secondary);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.edit-pasta-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-secondary);
+}
+
+.edit-pasta-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-secondary);
+}
+
+.edit-pasta-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0 var(--color-secondary);
+}
+
+.edit-pasta-button.secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.edit-pasta-button.reset {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.edit-pasta-button.reset:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-secondary);
+}
+
+.edit-pasta-button.reset:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-secondary);
+}
+
+.edit-pasta-button.reset:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0 var(--color-secondary);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .edit-pasta-times {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-pasta-info {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 550px) {
+  .edit-pasta-page {
+    width: calc(100% - 28px);
+    margin-top: 24px;
+  }
+
+  .edit-pasta-form {
+    padding: 14px;
+  }
+
+  .edit-pasta-info {
+    flex-direction: column;
+  }
+
+  .edit-pasta-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .edit-pasta-image img {
+    width: 78px;
+    height: 78px;
+  }
+
+  .edit-pasta-actions {
+    flex-direction: column-reverse;
+  }
+
+  .edit-pasta-button {
+    width: 100%;
+  }
+}

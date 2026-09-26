@@ -1,0 +1,453 @@
+/* =========================================================
+   FONT IMPORTS
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  --color-bg: #16330D;
+  --color-text: #16330D;
+  --color-surface: #E5DCB7;
+  --color-text-on-bg: #E5DCB7;
+
+  --color-primary: #701414;
+  --color-accent: #DB3E3E;
+  --color-secondary: #7EA366;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+
+  --radius: 4px;
+
+  --content-width: 1280px;
+}
+
+
+/* =========================================================
+   RECIPES PAGE
+   ========================================================= */
+
+.recipes-page {
+  width: 100%;
+  min-height: calc(100vh - 180px);
+  background: var(--color-green, #16330D);
+  padding: 34px 0 56px;
+}
+
+.recipes-container {
+  width: min(1300px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.recipes-container > h1 {
+  margin: 0 0 20px;
+
+  color: var(--color-cream, #E5DCB7);
+
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* =========================================================
+   RECIPE GRID
+   ========================================================= */
+
+.recipes-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+/* =========================================================
+   RECIPE CARD
+   ========================================================= */
+
+.recipe-card {
+  width: 100%;
+  min-width: 0;
+
+  background: var(--color-cream, #E5DCB7);
+
+  border: 1px solid
+    var(--color-green-light, #9DB86C);
+
+  border-radius: 4px;
+
+  box-shadow:
+    4px 4px 0
+    var(--color-green-light, #9DB86C);
+
+  color: var(--color-green, #16330D);
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.recipe-card-top {
+  min-height: 138px;
+
+  display: grid;
+
+  grid-template-columns:
+    88px
+    minmax(0, 1fr)
+    144px;
+
+  align-items: center;
+
+  column-gap: 16px;
+
+  padding: 16px;
+}
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.recipe-image-box {
+  width: 76px;
+  height: 76px;
+
+  border: 1px solid
+    var(--color-green-light, #9DB86C);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: var(--color-cream, #E5DCB7);
+}
+
+.recipe-image {
+  display: block;
+
+  width: 120px;
+  height: 120px;
+  aspect-ratio: 1 / 1;
+}
+
+/* =========================================================
+   RECIPE INFORMATION
+   ========================================================= */
+
+.recipe-summary {
+  min-width: 0;
+}
+
+.recipe-summary h2 {
+  margin: 0 0 7px;
+
+  color: var(--color-green, #16330D);
+
+  font-size: 20px;
+  line-height: 1.15;
+
+  font-weight: 700;
+}
+
+.recipe-tag {
+  display: inline-block;
+
+  margin-bottom: 5px;
+
+  padding: 2px 7px;
+
+  border: 1px solid
+    var(--color-green-light, #9DB86C);
+
+  border-radius: 3px;
+
+  color: var(--color-green, #16330D);
+
+  font-size: 12px;
+  line-height: 1.2;
+
+  font-weight: 600;
+}
+
+.recipe-meta {
+  margin: 0;
+
+  color: var(--color-green-muted, #536B45);
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.recipe-doneness {
+  margin: 2px 0 0;
+
+  color: var(--color-green-muted, #536B45);
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.recipe-doneness strong {
+  color: var(--color-green, #16330D);
+}
+
+/* =========================================================
+   SHOW / HIDE BUTTON
+   ========================================================= */
+
+.recipe-toggle {
+  width: 144px;
+
+  padding: 12px 14px;
+
+  border: 2px solid
+    var(--color-red, #701414);
+
+  border-radius: 4px;
+
+  background: var(--color-cream, #E5DCB7);
+
+  color: var(--color-red, #701414);
+
+  box-shadow:
+    3px 3px 0
+    var(--color-green-light, #9DB86C);
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.recipe-toggle:hover {
+  transform: translate(-1px, -1px);
+
+  box-shadow:
+    4px 4px 0
+    var(--color-green-light, #9DB86C);
+}
+
+.recipe-toggle:active {
+  transform: translate(2px, 2px);
+
+  box-shadow:
+    1px 1px 0
+    var(--color-green-light, #9DB86C);
+}
+
+/* =========================================================
+   EXPANDED RECIPE
+   ========================================================= */
+
+.recipe-card-expanded {
+  grid-column: 1 / -1;
+}
+
+.recipe-card-expanded
+.recipe-card-top {
+  min-height: 110px;
+}
+
+.recipe-divider {
+  height: 1px;
+
+  margin: 0 16px;
+
+  background:
+    var(--color-green-light, #9DB86C);
+}
+
+.recipe-expanded {
+  padding: 0 16px 16px;
+}
+
+.recipe-details {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 48px;
+
+  padding-top: 14px;
+}
+
+.recipe-section h3 {
+  margin: 0 0 12px;
+
+  color: var(--color-green, #16330D);
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.recipe-section ul,
+.recipe-section ol {
+  margin: 0;
+
+  padding-left: 28px;
+}
+
+.recipe-section li {
+  margin-bottom: 7px;
+
+  color: var(--color-green, #16330D);
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.recipe-section li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   COOK THIS PASTA
+   ========================================================= */
+
+.recipe-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 22px;
+}
+
+.cook-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 140px;
+
+  padding: 11px 16px;
+
+  border: 2px solid
+    var(--color-red, #701414);
+
+  border-radius: 4px;
+
+  background:
+    var(--color-red, #701414);
+
+  color:
+    var(--color-cream, #E5DCB7);
+
+  box-shadow:
+    3px 3px 0
+    var(--color-green-light, #9DB86C);
+
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cook-button:hover {
+  transform: translate(-1px, -1px);
+
+  box-shadow:
+    4px 4px 0
+    var(--color-green-light, #9DB86C);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .recipes-container {
+    width: calc(100% - 32px);
+  }
+
+  .recipe-card-top {
+    grid-template-columns:
+      80px
+      minmax(0, 1fr)
+      130px;
+
+    column-gap: 12px;
+  }
+
+  .recipe-toggle {
+    width: 130px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .recipes-page {
+    padding: 28px 0 44px;
+  }
+
+  .recipes-container {
+    width: calc(100% - 24px);
+  }
+
+  .recipes-container > h1 {
+    font-size: 28px;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-card-expanded {
+    grid-column: auto;
+  }
+
+  .recipe-card-top {
+    grid-template-columns:
+      76px
+      minmax(0, 1fr);
+
+    row-gap: 12px;
+
+    padding: 14px;
+  }
+
+  .recipe-toggle {
+    grid-column: 1 / -1;
+
+    width: 100%;
+  }
+
+  .recipe-details {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+  }
+
+  .recipe-actions {
+    justify-content: stretch;
+  }
+
+  .cook-button {
+    width: 100%;
+  }
+}
