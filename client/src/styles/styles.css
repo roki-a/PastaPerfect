@@ -302,7 +302,7 @@ button {
   border-color:var(--color-accent);
 }
 .site-header nav a.active {
-  border-bottom: 3px solid var(--red);
+  border-bottom: 3px solid var(--color-primary);
   padding-bottom: 10px;
 }
 /* Show line when selected */
@@ -910,105 +910,260 @@ footer p {
 
 
 /* =========================================================
-   MOBILE / TABLET
+   HEADER POSITION
    ========================================================= */
 
-@media (max-width: 900px) {
+.site-header {
+  position: relative;
+}
 
-  .header-main {
-    width: min(100% - 32px, var(--content-width));
-  }
 
-  .brand img {
-    width: 68px;
-    height: 68px;
-  }
+/* =========================================================
+   THREE DOTS
+   ========================================================= */
 
-  .brand-name {
-    font-size: 30px;
-  }
+.mobile-menu-button {
+  display: none;
+}
 
-  main {
-    width: min(100% - 32px, var(--content-width));
-  }
+/* =========================================================
+   TABLET — 2 PASTA CARDS PER ROW
+   ========================================================= */
+
+@media (min-width: 641px) and (max-width: 1024px) {
 
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .filter-panel {
-    grid-template-columns: 1fr;
+}
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+  /* Hide desktop navigation */
+  .main-nav {
+    display: none !important;
+  }
+
+  /* Hide desktop Add Pasta */
+  .add-link {
+    display: none !important;
+  }
+
+  /* Show three dots */
+  .mobile-menu-button {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: transparent;
+
+    color: var(--color-text);
+
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 4px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    position: relative;
+    z-index: 1001;
+  }
+
+  .mobile-menu-button:hover {
+    color: var(--color-primary);
+  }
+
+    .doneness-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .field-label {
+    display: block;
+  }
+
+  .segments {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .segments button {
+    width: 100%;
+    text-align: left;
+  }
+
+  /* =======================================================
+     MOBILE DROPDOWN
+     ======================================================= */
+
+  .mobile-menu {
+    position: absolute;
+
+    top: 100%;
+    right: 16px;
+
+    width: 220px;
+
+    display: flex !important;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background: var(--color-text-on-bg) !important;
+
+    border: 3px solid var(--color-text);
+    border-radius: 8px;
+
+    box-shadow: 6px 6px 0 var(--color-text);
+
+    z-index: 9999;
+  }
+
+  .mobile-menu-link {
+    display: block !important;
+
+    width: 100% !important;
+    box-sizing: border-box;
+
+    margin: 0 !important;
+    padding: 14px 16px;
+
+    color: var(--color-text) !important;
+    background: transparent !important;
+
+    text-decoration: none;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
+
+  .mobile-menu-link:hover {
+    color: var(--color-text) !important;
+  }
+
+  .mobile-menu-link.active {
+    color: var(--color-primary) !important;
+  }
+
+  .mobile-menu-link.active:hover {
+    color: var(--color-text) !important;
   }
 }
 
 
 /* =========================================================
-   MOBILE
+   PHONE
    ========================================================= */
 
 @media (max-width: 640px) {
 
-  .header-main {
+  .mobile-menu-button {
+    width: 48px;
+    height: 48px;
+
+    font-size: 26px;
+  }
+
+  .mobile-menu {
+    right: 16px;
+
     width: calc(100% - 32px);
+    max-width: 260px;
+  }
 
+  .mobile-menu-link {
+    font-size: 18px;
+    padding: 13px 15px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 641px){
+
+  .header-main {
+    width: calc(100% - 20px);
     min-height: auto;
-
-    padding: 16px 0;
-
-    flex-direction: column;
-
-    align-items: flex-start;
+    padding: 12px 0;
   }
 
   .brand {
-    gap: 10px;
+    gap: 8px;
   }
 
   .brand img {
-    width: 62px;
-    height: 62px;
+    width: 52px;
+    height: 52px;
   }
 
-  .brand-name {
-    font-size: 27px;
+  .mobile-menu-button {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+    letter-spacing: 3px;
   }
 
-  .site-header nav {
-    width: 100%;
-
-    justify-content: space-between;
-
-    gap: 12px;
-
-    font-size: 14px;
+  .mobile-menu {
+    top: 100%;
+    right: 10px;
+    width: calc(100% - 20px);
+    max-width: none;
+    padding: 6px;
+    border-width: 2px;
+    box-shadow: 4px 4px 0 var(--color-text);
   }
 
-  .add-link {
-    padding: 8px 12px !important;
-  }
-
-  .checker {
-    height: 12px;
-
-    background-size: 180px auto;
+  .mobile-menu-link {
+    font-size: 16px;
+    padding: 12px 13px;
   }
 
   main {
-    width: calc(100% - 32px);
-
-    padding: 32px 0 40px;
+    width: calc(100% - 20px);
+    padding: 24px 0 32px;
   }
 
   .presets-heading h1 {
-    font-size: 30px;
+    font-size: 27px;
   }
 
   .filter-panel {
-    padding: 18px 14px;
+    padding: 14px 12px;
   }
 
   .search-controls {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .search-button {
@@ -1017,28 +1172,44 @@ footer p {
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .pasta-card {
-    min-height: 148px;
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .pasta-card .card-top {
+    gap: 10px;
+  }
+
+  .pasta-icon {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .pasta-info h2 {
+    font-size: 18px;
   }
 
   .pasta-actions {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
   }
 
   .pasta-actions .button,
   .delete-pasta-button {
     width: 100%;
-  }
-
-  footer .checker {
-    width: calc(100% - 32px);
+    box-sizing: border-box;
   }
 
   footer p {
-    width: calc(100% - 32px);
+    width: calc(100% - 20px);
+    font-size: 13px;
+    text-align: center;
   }
 }

@@ -1011,7 +1011,7 @@ export default function Cook() {
 
           <Link
             className="button secondary wide"
-            to={`/pasta/${id}/edit`}
+            to={`/pasta/${pasta.id}/edit`}
           >
             Edit this pasta
           </Link>
