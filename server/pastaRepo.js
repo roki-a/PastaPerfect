@@ -1,9 +1,9 @@
 // Data-access layer for Pasta Perfect.
-//
-// Database values are passed through PostgreSQL parameters rather than
-// being inserted directly into SQL strings.
 
-export async function getAll(pool, search = '') {
+export async function getAll(
+  pool,
+  search = '',
+) {
   const result = await pool.query(
     `SELECT
        id,
@@ -12,6 +12,9 @@ export async function getAll(pool, search = '') {
        al_dente_seconds AS "alDenteSeconds",
        firm_seconds AS "firmSeconds",
        soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
        is_custom AS "isCustom"
      FROM pasta
      WHERE
@@ -24,7 +27,10 @@ export async function getAll(pool, search = '') {
   return result.rows
 }
 
-export async function getById(pool, id) {
+export async function getById(
+  pool,
+  id,
+) {
   const result = await pool.query(
     `SELECT
        id,
@@ -33,6 +39,9 @@ export async function getById(pool, id) {
        al_dente_seconds AS "alDenteSeconds",
        firm_seconds AS "firmSeconds",
        soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
        is_custom AS "isCustom"
      FROM pasta
      WHERE id = $1`,
@@ -42,7 +51,10 @@ export async function getById(pool, id) {
   return result.rows[0] ?? null
 }
 
-export async function create(pool, pasta) {
+export async function create(
+  pool,
+  pasta,
+) {
   const result = await pool.query(
     `INSERT INTO pasta (
        name,
@@ -60,6 +72,9 @@ export async function create(pool, pasta) {
        al_dente_seconds AS "alDenteSeconds",
        firm_seconds AS "firmSeconds",
        soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
        is_custom AS "isCustom"`,
     [
       pasta.name,
@@ -73,7 +88,52 @@ export async function create(pool, pasta) {
   return result.rows[0]
 }
 
-export async function deleteCustom(pool, id) {
+// ---------------------------------------------------------
+// UPDATE USER-ADDED PASTA DETAILS
+// ---------------------------------------------------------
+
+// Only user-added pasta can be changed here.
+//
+// Predefined pasta has is_custom = FALSE,
+// so it cannot be updated using this function.
+
+export async function updateCustomDetails(
+  pool,
+  id,
+  pasta,
+) {
+  const result = await pool.query(
+    `UPDATE pasta
+     SET
+       name = $1,
+       image = $2
+     WHERE id = $3
+       AND is_custom = TRUE
+     RETURNING
+       id,
+       name,
+       image,
+       al_dente_seconds AS "alDenteSeconds",
+       firm_seconds AS "firmSeconds",
+       soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
+       is_custom AS "isCustom"`,
+    [
+      pasta.name,
+      pasta.image,
+      id,
+    ],
+  )
+
+  return result.rows[0] ?? null
+}
+
+export async function deleteCustom(
+  pool,
+  id,
+) {
   const result = await pool.query(
     `DELETE FROM pasta
      WHERE id = $1
@@ -107,6 +167,9 @@ export async function updateCustom(
        al_dente_seconds AS "alDenteSeconds",
        firm_seconds AS "firmSeconds",
        soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
        is_custom AS "isCustom"`,
     [
       pasta.name,
@@ -116,6 +179,70 @@ export async function updateCustom(
       pasta.softSeconds,
       id,
     ],
+  )
+
+  return result.rows[0] ?? null
+}
+
+export async function updatePresetTime(
+  pool,
+  id,
+  times,
+) {
+  const result = await pool.query(
+    `UPDATE pasta
+     SET
+       custom_al_dente_seconds = $1,
+       custom_firm_seconds = $2,
+       custom_soft_seconds = $3
+     WHERE id = $4
+       AND is_custom = FALSE
+     RETURNING
+       id,
+       name,
+       image,
+       al_dente_seconds AS "alDenteSeconds",
+       firm_seconds AS "firmSeconds",
+       soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
+       is_custom AS "isCustom"`,
+    [
+      times.alDenteSeconds,
+      times.firmSeconds,
+      times.softSeconds,
+      id,
+    ],
+  )
+
+  return result.rows[0] ?? null
+}
+
+export async function resetPresetTime(
+  pool,
+  id,
+) {
+  const result = await pool.query(
+    `UPDATE pasta
+     SET
+       custom_al_dente_seconds = NULL,
+       custom_firm_seconds = NULL,
+       custom_soft_seconds = NULL
+     WHERE id = $1
+       AND is_custom = FALSE
+     RETURNING
+       id,
+       name,
+       image,
+       al_dente_seconds AS "alDenteSeconds",
+       firm_seconds AS "firmSeconds",
+       soft_seconds AS "softSeconds",
+       custom_al_dente_seconds AS "customAlDenteSeconds",
+       custom_firm_seconds AS "customFirmSeconds",
+       custom_soft_seconds AS "customSoftSeconds",
+       is_custom AS "isCustom"`,
+    [id],
   )
 
   return result.rows[0] ?? null

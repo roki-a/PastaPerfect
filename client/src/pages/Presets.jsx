@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+import { Link, useLocation } from 'react-router-dom'
 
 import Layout from '../components/Layout'
 
@@ -81,8 +82,29 @@ function PastaCard({
         ? pasta.softSeconds
         : pasta.alDenteSeconds
 
-  const seconds =
-    pasta.mySeconds ?? recommended
+  const custom =
+    doneness === 'firm'
+      ? pasta.customFirmSeconds
+      : doneness === 'soft'
+        ? pasta.customSoftSeconds
+        : pasta.customAlDenteSeconds
+
+  /*
+   * IMPORTANT:
+   *
+   * If custom is NULL, the pasta is using
+   * its original recommended time.
+   *
+   * If custom has a value, the pasta is
+   * using the user's customized time.
+   */
+  const hasCustomTime =
+  custom != null &&
+  Number(custom) !== Number(recommended)
+
+  const seconds = hasCustomTime
+    ? custom
+    : recommended
 
   async function handleDelete() {
     const confirmed = window.confirm(
@@ -98,9 +120,7 @@ function PastaCard({
 
   return (
     <article className="card pasta-card">
-
       <div className="card-top">
-
         <div className="pasta-icon">
           <img
             src={pasta.image}
@@ -109,7 +129,6 @@ function PastaCard({
         </div>
 
         <div className="pasta-info">
-
           <h2>
             {pasta.name}
           </h2>
@@ -118,22 +137,22 @@ function PastaCard({
             tone={
               pasta.isCustom
                 ? 'mine'
-                : 'recommended'
+                : hasCustomTime
+                  ? 'mine'
+                  : 'recommended'
             }
           >
             {pasta.isCustom
               ? 'Added pasta'
-              : 'Recommended'}
+              : hasCustomTime
+                ? 'My time'
+                : 'Recommended'}
           </Tag>
-
         </div>
-
       </div>
 
       <div className="card-bottom">
-
         <div className="card-time">
-
           <div className="time">
             {secondsLabel(seconds)}
           </div>
@@ -141,11 +160,9 @@ function PastaCard({
           <p className="muted">
             {DONENESS[doneness]}
           </p>
-
         </div>
 
         <div className="pasta-actions">
-
           <Link
             className="button"
             to={`/cook/${pasta.id}?doneness=${doneness}`}
@@ -162,26 +179,27 @@ function PastaCard({
                 Edit
               </Link>
 
-              <button
-                type="button"
-                className="delete-pasta-button"
-                onClick={handleDelete}
-                disabled={deleting}
-              >
-                {deleting ? 'Deleting...' : 'Delete'}
-              </button>
+              <div className="delete-pasta-row">
+                <button
+                  type="button"
+                  className="delete-pasta-button"
+                  onClick={handleDelete}
+                  disabled={deleting}
+                >
+                  {deleting ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
             </>
           )}
-
         </div>
-
       </div>
-
     </article>
   )
 }
 
 export default function Presets() {
+  const location = useLocation()
+
   const [pasta, setPasta] = useState([])
   const [search, setSearch] = useState('')
   const [doneness, setDoneness] =
@@ -190,39 +208,38 @@ export default function Presets() {
   const [deletingId, setDeletingId] =
     useState(null)
 
+  async function loadPasta() {
+    setError('')
+
+    try {
+      const data = await listPasta(search)
+
+      setPasta(data)
+    } catch (requestError) {
+      console.error(
+        'Could not load pasta:',
+        requestError,
+      )
+
+      setError(
+        requestError.message ||
+          'Could not load pasta.',
+      )
+    }
+  }
+
+  /*
+   * Reload the pasta whenever:
+   *
+   * - the page first opens
+   * - search changes
+   * - navigation returns to Presets
+   *
+   * This is important after Edit/Reset.
+   */
   useEffect(() => {
-    let cancelled = false
-
-    async function loadPasta() {
-      setError('')
-
-      try {
-        const data = await listPasta(search)
-
-        if (!cancelled) {
-          setPasta(data)
-        }
-      } catch (requestError) {
-        if (!cancelled) {
-          console.error(
-            'Could not load pasta:',
-            requestError,
-          )
-
-          setError(
-            requestError.message ||
-              'Could not load pasta.',
-          )
-        }
-      }
-    }
-
     loadPasta()
-
-    return () => {
-      cancelled = true
-    }
-  }, [search])
+  }, [search, location.key])
 
   async function handleDelete(id) {
     setError('')
@@ -231,7 +248,6 @@ export default function Presets() {
     try {
       await deletePasta(id)
 
-      // Remove the deleted card immediately.
       setPasta((current) =>
         current.filter(
           (item) => item.id !== id,
@@ -254,21 +270,17 @@ export default function Presets() {
 
   return (
     <Layout>
-
       <section className="page-heading presets-heading">
         <h1>Pick a pasta</h1>
       </section>
 
       <section className="filter-panel">
-
         <label className="search">
-
           <span>
             Search Pasta
           </span>
 
           <div className="search-controls">
-
             <input
               type="search"
               value={search}
@@ -287,13 +299,10 @@ export default function Presets() {
             >
               Search
             </button>
-
           </div>
-
         </label>
 
         <div className="doneness-filter">
-
           <span className="field-label">
             Doneness
           </span>
@@ -302,9 +311,7 @@ export default function Presets() {
             value={doneness}
             onChange={setDoneness}
           />
-
         </div>
-
       </section>
 
       {error && (
@@ -320,7 +327,6 @@ export default function Presets() {
         className="grid"
         aria-label="Pasta presets"
       >
-
         {pasta.map((item) => (
           <PastaCard
             key={item.id}
@@ -332,7 +338,6 @@ export default function Presets() {
             }
           />
         ))}
-
       </section>
 
       {!error && pasta.length === 0 && (
@@ -340,7 +345,6 @@ export default function Presets() {
           No pasta matches your search.
         </p>
       )}
-
     </Layout>
   )
 }
