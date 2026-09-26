@@ -79,5 +79,6 @@ The following parts were written, adapted, tested, or substantially changed by m
 - Configuring and testing the PostgreSQL database and seed data.
 - Testing the Express API using PowerShell and verifying that the pasta preset data was returned correctly.
 - Reviewing and modifying AI-assisted code before keeping it in the project.
+- Verifying that resetting a customized preset restores the recommended status and time in the UI.
 
 I reviewed and tested AI-assisted code before keeping it in the project.
