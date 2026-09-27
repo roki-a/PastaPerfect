@@ -1,9 +1,12 @@
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import { pool } from './db/pool.js'
 import * as pasta from './pastaRepo.js'
 
 const app = express()
+app.disable('x-powered-by')
+app.use(helmet())
 
 const allowedOrigins = (
   process.env.CORS_ORIGINS ||
