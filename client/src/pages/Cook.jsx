@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
+import { getPasta } from '../api' 
 import '../styles/Cook.css'
 
 const DONENESS = {
