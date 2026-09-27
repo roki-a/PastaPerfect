@@ -375,9 +375,8 @@ All AI-assisted code was reviewed, tested, adapted, and modified as needed to fi
 
 Detailed AI usage is documented in:
 
-```text
+
 [AI-USAGE.md](AI-USAGE.md)
-```
 
 ## Project Status
 
