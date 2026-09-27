@@ -123,7 +123,11 @@ function PastaCard({
       <div className="card-top">
         <div className="pasta-icon">
           <img
-            src={`${import.meta.env.BASE_URL}${pasta.image}`}
+            src={
+              pasta.image.startsWith('data:')
+                ? pasta.image
+                : `${import.meta.env.BASE_URL}${pasta.image}`
+            }
             alt={`${pasta.name} pasta`}
           />
         </div>
