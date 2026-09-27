@@ -5,8 +5,17 @@ import { pool } from './db/pool.js'
 import * as pasta from './pastaRepo.js'
 
 const app = express()
+
+// ---------------------------------------------------------
+// BASIC SECURITY
+// ---------------------------------------------------------
+
 app.disable('x-powered-by')
 app.use(helmet())
+
+// ---------------------------------------------------------
+// CORS
+// ---------------------------------------------------------
 
 const allowedOrigins = (
   process.env.CORS_ORIGINS ||
@@ -16,37 +25,121 @@ const allowedOrigins = (
   .map((origin) => origin.trim())
   .filter(Boolean)
 
-app.use(cors({ origin: allowedOrigins }))
+app.use(
+  cors({
+    origin: allowedOrigins,
+  }),
+)
 
-// Allow image data URLs when creating a pasta.
-// Pixel-art PNG images are usually small, but 5 MB gives enough room.
-app.use(express.json({ limit: '5mb' }))
+// ---------------------------------------------------------
+// REQUEST BODY LIMIT
+// ---------------------------------------------------------
+
+// Pasta images are stored as PNG data URLs.
+// 5 MB is enough for the project's pixel-art images.
+app.use(
+  express.json({
+    limit: '5mb',
+  }),
+)
+
+// ---------------------------------------------------------
+// VALIDATION HELPERS
+// ---------------------------------------------------------
+
+function getPastaId(request, response) {
+  const id = Number(request.params.id)
+
+  if (!Number.isInteger(id) || id <= 0) {
+    response.status(400).json({
+      error:
+        'Pasta ID must be a positive whole number.',
+    })
+
+    return null
+  }
+
+  return id
+}
+
+function validateCookingTimes(
+  alDenteSeconds,
+  firmSeconds,
+  softSeconds,
+) {
+  const times = [
+    alDenteSeconds,
+    firmSeconds,
+    softSeconds,
+  ]
+
+  return times.every(
+    (value) =>
+      Number.isInteger(value) &&
+      value > 0,
+  )
+}
+
+function validatePngImage(image) {
+  if (
+    typeof image !== 'string' ||
+    !image.trim()
+  ) {
+    return false
+  }
+
+  // Only restrict data URLs.
+  // Normal project image paths such as "angel-hair.png"
+  // remain valid.
+  if (image.startsWith('data:image/')) {
+    return image.startsWith(
+      'data:image/png;base64,',
+    )
+  }
+
+  return true
+}
 
 // ---------------------------------------------------------
 // HEALTH CHECK
 // ---------------------------------------------------------
 
-app.get('/healthz', (request, response) => {
-  response.json({ ok: true })
-})
-
-app.get('/readyz', async (request, response) => {
-  try {
-    await pool.query('SELECT 1')
-
+app.get(
+  '/healthz',
+  (request, response) => {
     response.json({
       ok: true,
-      db: 'up',
     })
-  } catch (error) {
-    console.error('readyz failed:', error.message)
+  },
+)
 
-    response.status(503).json({
-      ok: false,
-      db: 'down',
-    })
-  }
-})
+// ---------------------------------------------------------
+// DATABASE READINESS CHECK
+// ---------------------------------------------------------
+
+app.get(
+  '/readyz',
+  async (request, response) => {
+    try {
+      await pool.query('SELECT 1')
+
+      response.json({
+        ok: true,
+        db: 'up',
+      })
+    } catch (error) {
+      console.error(
+        'readyz failed:',
+        error.message,
+      )
+
+      response.status(503).json({
+        ok: false,
+        db: 'down',
+      })
+    }
+  },
+)
 
 // ---------------------------------------------------------
 // GET ALL PASTA
@@ -57,12 +150,24 @@ app.get('/readyz', async (request, response) => {
 
 app.get(
   '/api/pasta',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
-      const search =
+      let search =
         typeof request.query.search === 'string'
           ? request.query.search.trim()
           : ''
+
+      // Prevent unnecessarily large search strings.
+      if (search.length > 100) {
+        return response.status(400).json({
+          error:
+            'Search must be 100 characters or fewer.',
+        })
+      }
 
       const rows = await pasta.getAll(
         pool,
@@ -82,11 +187,24 @@ app.get(
 
 app.get(
   '/api/pasta/:id',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
+      const id = getPastaId(
+        request,
+        response,
+      )
+
+      if (id === null) {
+        return
+      }
+
       const row = await pasta.getById(
         pool,
-        request.params.id,
+        id,
       )
 
       if (!row) {
@@ -108,7 +226,11 @@ app.get(
 
 app.post(
   '/api/pasta',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
       const {
         name,
@@ -118,6 +240,7 @@ app.post(
         softSeconds,
       } = request.body
 
+      // Validate name.
       if (
         typeof name !== 'string' ||
         !name.trim()
@@ -127,6 +250,14 @@ app.post(
         })
       }
 
+      if (name.trim().length > 100) {
+        return response.status(400).json({
+          error:
+            'Pasta name must be 100 characters or fewer.',
+        })
+      }
+
+      // Validate image.
       if (
         typeof image !== 'string' ||
         !image.trim()
@@ -136,17 +267,19 @@ app.post(
         })
       }
 
-      const times = [
-        alDenteSeconds,
-        firmSeconds,
-        softSeconds,
-      ]
+      if (!validatePngImage(image)) {
+        return response.status(400).json({
+          error:
+            'Uploaded images must be PNG files.',
+        })
+      }
 
+      // Validate cooking times.
       if (
-        times.some(
-          (value) =>
-            !Number.isInteger(value) ||
-            value <= 0,
+        !validateCookingTimes(
+          alDenteSeconds,
+          firmSeconds,
+          softSeconds,
         )
       ) {
         return response.status(400).json({
@@ -155,27 +288,17 @@ app.post(
         })
       }
 
-      if (
-        image.startsWith('data:image/') &&
-        !image.startsWith(
-          'data:image/png;base64,',
+      const created =
+        await pasta.create(
+          pool,
+          {
+            name: name.trim(),
+            image: image.trim(),
+            alDenteSeconds,
+            firmSeconds,
+            softSeconds,
+          },
         )
-      ) {
-        return response.status(400).json({
-          error: 'Uploaded images must be PNG files.',
-        })
-      }
-
-      const created = await pasta.create(
-        pool,
-        {
-          name: name.trim(),
-          image: image.trim(),
-          alDenteSeconds,
-          firmSeconds,
-          softSeconds,
-        },
-      )
 
       response.status(201).json(created)
     } catch (error) {
@@ -190,13 +313,27 @@ app.post(
 
 app.put(
   '/api/pasta/:id',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
+      const id = getPastaId(
+        request,
+        response,
+      )
+
+      if (id === null) {
+        return
+      }
+
       const {
         name,
         image,
       } = request.body
 
+      // Validate name.
       if (
         typeof name !== 'string' ||
         !name.trim()
@@ -206,6 +343,14 @@ app.put(
         })
       }
 
+      if (name.trim().length > 100) {
+        return response.status(400).json({
+          error:
+            'Pasta name must be 100 characters or fewer.',
+        })
+      }
+
+      // Validate image.
       if (
         typeof image !== 'string' ||
         !image.trim()
@@ -215,21 +360,17 @@ app.put(
         })
       }
 
-      if (
-        image.startsWith('data:image/') &&
-        !image.startsWith(
-          'data:image/png;base64,',
-        )
-      ) {
+      if (!validatePngImage(image)) {
         return response.status(400).json({
-          error: 'Uploaded images must be PNG files.',
+          error:
+            'Uploaded images must be PNG files.',
         })
       }
 
       const updated =
         await pasta.updateCustomDetails(
           pool,
-          request.params.id,
+          id,
           {
             name: name.trim(),
             image: image.trim(),
@@ -256,25 +397,32 @@ app.put(
 
 app.put(
   '/api/pasta/:id/time',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
+      const id = getPastaId(
+        request,
+        response,
+      )
+
+      if (id === null) {
+        return
+      }
+
       const {
         alDenteSeconds,
         firmSeconds,
         softSeconds,
       } = request.body
 
-      const times = [
-        alDenteSeconds,
-        firmSeconds,
-        softSeconds,
-      ]
-
       if (
-        times.some(
-          (value) =>
-            !Number.isInteger(value) ||
-            value <= 0,
+        !validateCookingTimes(
+          alDenteSeconds,
+          firmSeconds,
+          softSeconds,
         )
       ) {
         return response.status(400).json({
@@ -286,7 +434,7 @@ app.put(
       const updated =
         await pasta.updatePresetTime(
           pool,
-          request.params.id,
+          id,
           {
             alDenteSeconds,
             firmSeconds,
@@ -314,12 +462,25 @@ app.put(
 
 app.post(
   '/api/pasta/:id/reset-time',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
+      const id = getPastaId(
+        request,
+        response,
+      )
+
+      if (id === null) {
+        return
+      }
+
       const reset =
         await pasta.resetPresetTime(
           pool,
-          request.params.id,
+          id,
         )
 
       if (!reset) {
@@ -342,12 +503,25 @@ app.post(
 
 app.delete(
   '/api/pasta/:id',
-  async (request, response, next) => {
+  async (
+    request,
+    response,
+    next,
+  ) => {
     try {
+      const id = getPastaId(
+        request,
+        response,
+      )
+
+      if (id === null) {
+        return
+      }
+
       const deleted =
         await pasta.deleteCustom(
           pool,
-          request.params.id,
+          id,
         )
 
       if (!deleted) {
@@ -389,6 +563,7 @@ app.use(
   ) => {
     console.error(error)
 
+    // PostgreSQL unique constraint.
     if (error.code === '23505') {
       return response.status(409).json({
         error:
@@ -396,9 +571,32 @@ app.use(
       })
     }
 
+    // Invalid JSON body.
+    if (
+      error instanceof SyntaxError &&
+      error.status === 400 &&
+      'body' in error
+    ) {
+      return response.status(400).json({
+        error: 'Invalid JSON request body.',
+      })
+    }
+
+    // Request body exceeded express.json limit.
+    if (
+      error.type === 'entity.too.large'
+    ) {
+      return response.status(413).json({
+        error:
+          'Request body is too large.',
+      })
+    }
+
+    // Never expose database or internal
+    // implementation details to the client.
     response.status(500).json({
       error:
-        'Something went wrong on the server',
+        'Something went wrong on the server.',
     })
   },
 )
@@ -407,14 +605,18 @@ app.use(
 // START SERVER
 // ---------------------------------------------------------
 
-const port = process.env.PORT || 3000
+const port =
+  process.env.PORT || 3000
 
-app.listen(port, () => {
-  console.log(
-    `Pasta Perfect API listening on http://localhost:${port}`,
-  )
+app.listen(
+  port,
+  () => {
+    console.log(
+      `Pasta Perfect API listening on http://localhost:${port}`,
+    )
 
-  console.log(
-    `CORS allows: ${allowedOrigins.join(', ')}`,
-  )
-})
+    console.log(
+      `CORS allows: ${allowedOrigins.join(', ')}`,
+    )
+  },
+)
