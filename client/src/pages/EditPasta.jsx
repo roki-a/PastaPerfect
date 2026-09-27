@@ -6,7 +6,7 @@ import {
   updatePasta,
   updatePastaTime,
   resetPastaTime,
-} from '../api/httpApi'
+} from '../api'
 import '../styles/editPasta.css'
 
 // ---------------------------------------------------------

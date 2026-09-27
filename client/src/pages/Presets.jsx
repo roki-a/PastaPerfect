@@ -7,7 +7,7 @@ import Layout from '../components/Layout'
 import {
   listPasta,
   deletePasta,
-} from '../api/httpApi'
+} from '../api'
 
 const DONENESS = {
   al_dente: 'Al dente',

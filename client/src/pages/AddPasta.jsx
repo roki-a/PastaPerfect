@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Layout from '../components/Layout'
-import { createPasta } from '../api/httpApi'
+import { createPasta } from '../api'
 import '../styles/addPasta.css'
 
 const INITIAL_FORM = {
