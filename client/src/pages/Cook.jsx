@@ -3,8 +3,6 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
 import '../styles/Cook.css'
 
-const API = '/api'
-
 const DONENESS = {
   al_dente: 'Al dente',
   firm: 'Firm',
@@ -448,15 +446,7 @@ export default function Cook() {
       setError('')
 
       try {
-        const response = await fetch(
-          `${API}/pasta/${id}`,
-        )
-
-        if (!response.ok) {
-          throw new Error('Could not load pasta.')
-        }
-
-        const data = await response.json()
+        const data = await getPasta(id)
 
         if (!cancelled) {
           const savedTime = Number(
@@ -926,7 +916,7 @@ export default function Cook() {
           <div className="pasta-header">
 
             <PastaThumb
-              src={pasta.image}
+              src={`${import.meta.env.BASE_URL}${pasta.image}`}
               name={pasta.name}
             />
 

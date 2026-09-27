@@ -15,7 +15,7 @@ export default function Layout({ children }) {
             aria-label="Pasta Perfect home"
           >
             <img
-              src="/logo-green.png"
+              src={`${import.meta.env.BASE_URL}logo-green.png`}
               alt="Pasta Perfect"
             />
 

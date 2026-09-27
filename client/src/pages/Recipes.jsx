@@ -246,7 +246,7 @@ function RecipeCard({
       <div className="recipe-card-top">
         <div className="recipe-image-box">
           <img
-            src={recipe.image}
+            src={`${import.meta.env.BASE_URL}${recipe.image}`}
             alt={recipe.name}
             className="recipe-image"
           />
