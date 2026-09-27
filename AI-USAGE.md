@@ -46,6 +46,14 @@ All AI-assisted code was reviewed, tested, adapted, and modified as needed to fi
 - What I kept or changed: I used Claude's assistance for the tomato timer visual structure and interaction. I then tested and refined the implementation so dragging left decreases the cooking time, dragging right increases the cooking time, and the ruler-like indicator follows the drag direction.
 - Commit: https://github.com/roki-a/PastaPerfect/commit/60f256a
 
+### Entry 6 — Presets “My time” / “Recommended” Status
+
+- Tool: ChatGPT
+- Date: September 26, 2026
+- Request: Help fix the Pasta Presets status label so that a customized cooking time is shown as “My time”, while resetting the customized time correctly changes the label back to “Recommended”.
+- What I kept or changed: I used ChatGPT's assistance to debug the relationship between the customized cooking-time values and the status displayed on the Presets cards. I kept and adapted the suggested logic so that when the custom time is reset, the original recommended time is used and the card displays “Recommended” instead of “My time”.
+- Commit: https://github.com/roki-a/PastaPerfect/commit/a7c91d2
+
 ## Where AI Got It Wrong
 
 ### Case 1 — Tomato Timer Layout

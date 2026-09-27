@@ -91,12 +91,6 @@ export async function create(
 // ---------------------------------------------------------
 // UPDATE USER-ADDED PASTA DETAILS
 // ---------------------------------------------------------
-
-// Only user-added pasta can be changed here.
-//
-// Predefined pasta has is_custom = FALSE,
-// so it cannot be updated using this function.
-
 export async function updateCustomDetails(
   pool,
   id,

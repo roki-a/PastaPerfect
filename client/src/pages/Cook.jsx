@@ -69,7 +69,6 @@ const myTimeKey = (id, doneness) => `cooktimer:mytime:${id}:${doneness}`
 
 /* =========================================================
    PASTA THUMBNAIL
-   Uses the image already defined by the pasta data.
    ========================================================= */
 
 function PastaThumb({ src, name }) {
