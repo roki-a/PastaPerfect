@@ -36,6 +36,7 @@ const recipes = [
 
   {
     id: 'carbonara',
+    pastaId: 2,
     name: 'Carbonara',
     image: '/carbonara-authentic.jpg',
     description: 'Authentic, no cream',
@@ -62,6 +63,7 @@ const recipes = [
 
   {
     id: 'carbonara-filipino',
+    pastaId: 2,
     name: 'Carbonara',
     image: '/carbonara.jpg',
     description: 'With cream (Filipino style)',
@@ -119,6 +121,7 @@ const recipes = [
 
   {
     id: 'pesto',
+    pastaId: 5,
     name: 'Pesto pasta',
     image: '/pesto.jpg',
     description: 'Basil and Parmesan',
@@ -147,6 +150,7 @@ const recipes = [
 
   {
     id: 'filipino-spaghetti',
+    pastaId: 2,
     name: 'Filipino spaghetti',
     image: '/filipino-spaghetti.jpg',
     description: 'Sweet-style',
@@ -175,6 +179,7 @@ const recipes = [
 
   {
     id: 'pomodoro',
+    pastaId: 2,
     name: 'Spaghetti al pomodoro',
     image: '/pomodoro.jpg',
     description: 'Italian',
@@ -202,6 +207,7 @@ const recipes = [
 
   {
     id: 'sopas',
+    pastaId: 4,
     name: 'Sopas (Chicken Macaroni Soup)',
     image: '/sopas.jpg',
     description: 'Filipino comfort food',

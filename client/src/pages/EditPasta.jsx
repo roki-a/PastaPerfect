@@ -618,7 +618,7 @@ export default function EditPasta() {
                     src={
                         pasta.image?.startsWith('data:')
                         ? pasta.image
-                        : `/${pasta.image}`
+                        : `${import.meta.env.BASE_URL}${pasta.image}`
                     }
                     alt={`${pasta.name} pasta`}
                 />
@@ -885,7 +885,7 @@ export default function EditPasta() {
                 src={
                     pasta.image?.startsWith('data:')
                     ? pasta.image
-                    : `/${pasta.image}`
+                    : `${import.meta.env.BASE_URL}${pasta.image}`
                 }
                 alt={`${pasta.name} pasta`}
             />
