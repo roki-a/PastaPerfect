@@ -885,6 +885,65 @@ textarea:focus {
 }
 
 
+/* ---------------------------------------------------------
+   APP PASSWORD GATE
+   --------------------------------------------------------- */
+
+.password-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.password-gate-card {
+  width: min(420px, 100%);
+  padding: 32px;
+  border-radius: 20px;
+  background: var(--color-surface);
+  box-shadow: 0 12px 40px var(--color-text);
+}
+
+.password-gate-card h1 {
+  margin: 0 0 8px;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.password-gate-card p {
+  margin: 0 0 20px;
+  color: var(--color-secondary);
+}
+
+.password-gate-card form {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+  gap: 10px;
+}
+
+.password-gate-card input {
+  padding: 12px 14px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.password-gate-card button {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.password-gate-error {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
 /* =========================================================
    FOOTER
    ========================================================= */

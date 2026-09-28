@@ -5,10 +5,12 @@ import Cook from './pages/Cook'
 import AddPasta from './pages/AddPasta'
 import EditPasta from './pages/EditPasta'
 import Recipes from './pages/Recipes'
+import AppPassword from './components/AppPassword'
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <AppPassword>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
 
         {/* Home / Pasta presets */}
@@ -52,6 +54,7 @@ export default function App() {
         />
 
       </Routes>
-    </BrowserRouter>
+     </BrowserRouter>
+    </AppPassword>
   )
 }
