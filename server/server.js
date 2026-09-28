@@ -142,6 +142,45 @@ app.get(
 )
 
 // ---------------------------------------------------------
+// APP PASSWORD AUTHENTICATION
+// ---------------------------------------------------------
+
+const appPassword = process.env.APP_PASSWORD
+
+if (!appPassword) {
+  console.error(
+    'APP_PASSWORD is not set. Add it to the Render environment variables.'
+  )
+  process.exit(1)
+}
+
+function requireAppPassword(request, response, next) {
+  const authorization = request.get('Authorization')
+
+  if (!authorization) {
+    return response.status(401).json({
+      error: 'App password required.',
+    })
+  }
+
+  const [scheme, password] = authorization.split(' ')
+
+  if (
+    scheme !== 'Bearer' ||
+    !password ||
+    password !== appPassword
+  ) {
+    return response.status(401).json({
+      error: 'Invalid app password.',
+    })
+  }
+
+  next()
+}
+
+app.use('/api', requireAppPassword)
+
+// ---------------------------------------------------------
 // GET ALL PASTA
 // ---------------------------------------------------------
 
