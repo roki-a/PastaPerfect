@@ -8,7 +8,7 @@ Live app:
 
 * https://roki-a.github.io/PastaPerfect/
          
-* https://pasta-perfect-api.onrender.com
+* https://pasta-perfect.onrender.com
 
 Production API: https://pasta-perfect-api.onrender.com
 
@@ -121,7 +121,7 @@ The React frontend is deployed through GitHub Pages and Render:
 
 https://roki-a.github.io/PastaPerfect/
 
-https://pasta-perfect-api.onrender.com
+https://pasta-perfect.onrender.com
 
 The Express API is deployed separately on Render:
 
