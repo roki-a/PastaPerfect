@@ -113,7 +113,7 @@ All AI-assisted work was tested, adapted, and modified to fit the Pasta Perfect 
 
 Detailed AI usage is documented here:
 
-(AI-USAGE.md)[AI-USAGE.md]
+[AI-USAGE.md](AI-USAGE.md)
 
 ## Current deployment
 
