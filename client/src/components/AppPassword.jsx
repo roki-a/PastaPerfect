@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import {
   setAppPassword,
   clearAppPassword,
@@ -9,6 +10,7 @@ export default function AppPassword({ children }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [checking, setChecking] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -71,17 +73,38 @@ export default function AppPassword({ children }) {
             App password
           </label>
 
-          <input
-            id="app-password"
-            type="password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value)
-              setError('')
-            }}
-            autoComplete="current-password"
-            disabled={checking}
-          />
+          <div className="password-input-wrapper">
+            <input
+              id="app-password"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value)
+                setError('')
+              }}
+              autoComplete="current-password"
+              disabled={checking}
+            />
+
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword((current) => !current)}
+              aria-label={
+                showPassword
+                  ? 'Hide password'
+                  : 'Show password'
+              }
+              title={
+                showPassword
+                  ? 'Hide password'
+                  : 'Show password'
+              }
+              disabled={checking}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
 
           {error && (
             <p className="password-gate-error">
