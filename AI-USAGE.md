@@ -1,156 +1,152 @@
-# AI Usage
+# AI usage
 
-This project was developed with assistance from AI tools, primarily ChatGPT and Claude. AI was used for planning, explaining code, debugging, reviewing implementation decisions, and assisting with UI and interaction development.
+Pasta Perfect was built with AI assistance, mainly ChatGPT and Claude. I used
+them for planning, explaining code, debugging, reviewing decisions, and help with
+the UI and interactions. Everything they gave me was run, tested in the browser,
+and adapted to my UI/UX design before I kept it. This file is the record.
 
-All AI-assisted code was reviewed, tested, adapted, and modified as needed to fit the Pasta Perfect project and my UI/UX design.
+## 1. How I used AI
 
-## AI Usage Entries
+### 2026-09-23 - Navigation bar
 
-### Entry 1 — Navigation Bar
+- **Tool:** ChatGPT
+- **What I asked for:** Help implementing and organizing the navigation bar.
+- **What it gave back:** A suggested navigation structure.
+- **What I kept, what I changed, and why:** I kept the structure and adapted it to the existing Pasta Perfect React project so it matched my design.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/ef963ca
 
-- Tool: ChatGPT
-- Date: September 23, 2026
-- Request: Help implement and organize the navigation bar for the Pasta Perfect application.
-- What I kept or changed: I used the suggested navigation structure and adapted the implementation to the existing Pasta Perfect React project.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/ef963ca
+### 2026-09-24 - Pasta Presets UI and navigation
 
-### Entry 2 — Pasta Presets UI and Navigation
+- **Tool:** ChatGPT
+- **What I asked for:** Help refining the Presets page, navigation state, routing, and UI/UX.
+- **What it gave back:** A React and CSS structure for the page.
+- **What I kept, what I changed, and why:** I kept the structure but changed the layout, navigation, spacing, typography, and visual styling to match my UI/UX design.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2f91658
 
-- Tool: ChatGPT
-- Date: September 24, 2026
-- Request: Help refine the Pasta Presets page, navigation state, routing, and UI/UX to match the Pasta Perfect design.
-- What I kept or changed: I used the suggested React and CSS structure and adapted the layout, navigation, spacing, typography, and visual styling to my UI/UX design.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/2f91658
+### 2026-09-24 - Presets database integration
 
-### Entry 3 — Pasta Presets Database Integration
+- **Tool:** ChatGPT
+- **What I asked for:** Help connecting the Presets page to PostgreSQL through the Express API, and fixing connection and seeding problems.
+- **What it gave back:** Debugging and integration guidance.
+- **What I kept, what I changed, and why:** I followed the guidance, tested the API with PowerShell, and changed the database configuration and seed data to fit my local PostgreSQL setup.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/10c8b5a
 
-- Tool: ChatGPT
-- Date: September 24, 2026
-- Request: Help connect the pasta presets page to the PostgreSQL database through the Express API and troubleshoot database connection and seeding issues.
-- What I kept or changed: I followed the debugging and integration guidance, tested the API using PowerShell, and adapted the database configuration and seed data to my local PostgreSQL setup.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/10c8b5a
+### 2026-09-24 - Cook timer page
 
-### Entry 4 — Cook Timer Page
+- **Tool:** ChatGPT
+- **What I asked for:** Help building and debugging the cook timer: timer state, doneness settings, start, pause, reset, and loading pasta data from the API.
+- **What it gave back:** A React timer structure.
+- **What I kept, what I changed, and why:** I used it as a starting point, then changed the code and styling to fit my UI/UX requirements.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/b6b2b84
 
-- Tool: ChatGPT
-- Date: September 24, 2026
-- Request: Help implement and debug the pasta cooking timer page, including timer state, doneness settings, start, pause, reset, and loading pasta data from the API.
-- What I kept or changed: I used the suggested React timer structure as a starting point and modified the implementation and styling to fit the Pasta Perfect UI/UX requirements.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/b6b2b84
+### 2026-09-24 - Tomato timer interaction
 
-### Entry 5 — Tomato Timer Interaction
+- **Tool:** Claude
+- **What I asked for:** Help improving the tomato-shaped timer and its drag interaction for adjusting cooking time.
+- **What it gave back:** The tomato's visual structure and a drag interaction.
+- **What I kept, what I changed, and why:** I kept the structure, then tested and refined it so dragging left lowers the time, dragging right raises it, and the ruler indicator follows the drag.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
 
-- Tool: Claude
-- Date: September 24, 2026
-- Request: Help improve the tomato-shaped timer interface and its drag interaction for adjusting cooking time.
-- What I kept or changed: I used Claude's assistance for the tomato timer visual structure and interaction. I then tested and refined the implementation so dragging left decreases the cooking time, dragging right increases the cooking time, and the ruler-like indicator follows the drag direction.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/60f256a
+### 2026-09-26 - "My time" / "Recommended" label
 
-### Entry 6 — Presets “My time” / “Recommended” Status
+- **Tool:** ChatGPT
+- **What I asked for:** Help fixing the Presets card label so a customized time shows "My time" and resetting it goes back to "Recommended".
+- **What it gave back:** Logic linking the custom time values to the label.
+- **What I kept, what I changed, and why:** I kept and adapted the logic so a reset uses the original recommended time and the card shows "Recommended". I checked the reset in the UI.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/a7c91d2
 
-- Tool: ChatGPT
-- Date: September 26, 2026
-- Request: Help fix the Pasta Presets status label so that a customized cooking time is shown as “My time”, while resetting the customized time correctly changes the label back to “Recommended”.
-- What I kept or changed: I used ChatGPT's assistance to debug the relationship between the customized cooking-time values and the status displayed on the Presets cards. I kept and adapted the suggested logic so that when the custom time is reset, the original recommended time is used and the card displays “Recommended” instead of “My time”.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/a7c91d2
+### 2026-09-27 - GitHub Pages deployment and mock API
 
-### Entry 7 — GitHub Pages Deployment and Mock API
+- **Tool:** ChatGPT
+- **What I asked for:** Help making the frontend work on GitHub Pages: routing, API handling, asset paths, and production build testing.
+- **What it gave back:** Fixes for the Pages routing and 404 errors, the Vite base path setup, and a mock API for the deployed demo.
+- **What I kept, what I changed, and why:** I kept the mock API so Pages works without a server, while the app still uses the real Express API locally. I tested with `npm run build` and browser developer tools.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/6920b13 (also https://github.com/roki-a/PastaPerfect/commit/6a95d4e and https://github.com/roki-a/PastaPerfect/commit/88f17b0)
 
-- Tool: ChatGPT
-- Date: September 27, 2026
-- Request: Help make the Pasta Perfect frontend work correctly when deployed to GitHub Pages, including routing, API handling, asset paths, and production build testing.
-- What I kept or changed: I used ChatGPT's assistance to troubleshoot GitHub Pages routing and 404 errors, configure the Vite base path, add a mock API for the deployed demo, and update the application so it could use the mock API on GitHub Pages while still using the real Express API locally. I tested the production build with `npm run build` and inspected browser developer tools to identify deployment problems.
-- Commits:
-  - https://github.com/roki-a/PastaPerfect/commit/6920b13
-  - https://github.com/roki-a/PastaPerfect/commit/6a95d4e
-  - https://github.com/roki-a/PastaPerfect/commit/88f17b0
+### 2026-09-27 - Cook page API loading
 
-### Entry 8 — Cook Page API Loading
+- **Tool:** ChatGPT
+- **What I asked for:** Help making the Cook page load pasta data when deployed with the mock API.
+- **What it gave back:** Guidance on the failing request.
+- **What I kept, what I changed, and why:** I found that Cook.jsx still made a direct `/api/pasta/:id` request, and changed it to use `getPasta(id)` from the shared API layer.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/daeeaaa
 
-- Tool: ChatGPT
-- Date: September 27, 2026
-- Request: Help fix the Cook page so it could load pasta data correctly when the application is deployed using the mock API.
-- What I kept or changed: I identified that Cook.jsx was still making a direct `/api/pasta/:id` request instead of using the shared API layer. I changed the page to use `getPasta(id)`, allowing the Cook page to work with the same API selection used by the rest of the application.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/daeeaaa
+### 2026-09-27 - Uploaded pasta image paths
 
-### Entry 9 — Uploaded Pasta Image Paths
+- **Tool:** ChatGPT
+- **What I asked for:** Help fixing uploaded pasta images that did not show on the deployed Presets page.
+- **What it gave back:** An image-path fix.
+- **What I kept, what I changed, and why:** I found that predefined images come from the public folder and need the Pages base path, while uploaded images are data URLs and must be used as they are. I changed the image handling to treat the two differently.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2315a13
 
-- Tool: ChatGPT
-- Date: September 27, 2026
-- Request: Help fix uploaded pasta images that were not displaying correctly on the deployed Pasta Presets page.
-- What I kept or changed: I identified that predefined pasta images and user-uploaded images were stored differently. Predefined images use paths from the public folder and need the GitHub Pages base path, while uploaded images are stored as data URLs and must be used directly. I adapted the image handling so uploaded pasta images could display correctly.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/2315a13
+## 2. Where the AI got it wrong
 
-## Where AI Got It Wrong
+### Case 1 - Tomato timer layout
 
-### Case 1 — Tomato Timer Layout
+- **What it gave me:** A tomato shape and timer layout.
+- **What was wrong with it:** The timer window was in the wrong place and the tomato proportions did not match my UI/UX design.
+- **What I did instead:** I compared the page with my design reference and adjusted the tomato structure and CSS until it matched.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
 
-- AI output: The initial tomato timer implementation produced a tomato shape and timer layout that did not closely match my UI/UX design.
-- What was wrong: The timer window was positioned incorrectly, and the tomato proportions and surrounding layout were not consistent with the intended design.
-- How I fixed it: I tested the page against my UI/UX reference and repeatedly adjusted the tomato structure and CSS until the timer was positioned and styled more appropriately.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/60f256a
+### Case 2 - Timer drag direction
 
-### Case 2 — Timer Drag Direction
+- **What it gave me:** A drag interaction for changing the timer.
+- **What was wrong with it:** The direction was reversed from my design.
+- **What I did instead:** I changed it so dragging left lowers the timer and dragging right raises it, and made the ruler indicator follow the drag.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
 
-- AI output: The initial drag behavior did not match the intended direction for changing the timer.
-- What was wrong: The interaction direction was reversed from the intended design.
-- How I fixed it: I changed the interaction so dragging left decreases the timer and dragging right increases the timer. I also adjusted the ruler-like indicator so it follows the drag direction.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/60f256a
+### Case 3 - Presets active state in the navigation
 
-### Case 3 — Presets Navigation Active State
+- **What it gave me:** A navigation that should keep the active line under Presets.
+- **What was wrong with it:** The active state disappeared when moving between routes, because `/` and `/presets` were not both treated as Presets.
+- **What I did instead:** I changed the route detection in Header.jsx so both paths count as Presets, then checked it in the browser.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2f91658
 
-- AI output: The initial navigation implementation did not correctly keep the active line under Presets when navigating between routes.
-- What was wrong: The active navigation state disappeared or was not correctly associated with the Presets route.
-- How I fixed it: I updated the route detection in Header.jsx so both `/` and `/presets` are treated as the Presets section and verified the navigation behavior in the browser.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/2f91658
+### Case 4 - GitHub Pages routing and asset paths
 
-### Case 4 — GitHub Pages Routing and Asset Paths
+- **What it gave me:** A first deployment configuration.
+- **What was wrong with it:** It did not account for Pages serving the app from `/PastaPerfect/`, so routes and assets returned 404 errors.
+- **What I did instead:** I found the wrong paths with browser developer tools and changed the Vite base path, the React Router configuration, and the asset and API handling.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/6a95d4e (also https://github.com/roki-a/PastaPerfect/commit/88f17b0)
 
-- AI output: The initial deployment configuration did not fully account for GitHub Pages serving the application from the `/PastaPerfect/` repository path.
-- What was wrong: The deployed application initially produced route and asset 404 errors because some paths were being treated as if the application was hosted at the root of the domain.
-- How I fixed it: I tested the deployed application using the browser developer tools, identified the incorrect paths, and updated the Vite base path, React Router configuration, and asset/API handling to work with the GitHub Pages repository path.
-- Commits:
-  - https://github.com/roki-a/PastaPerfect/commit/6a95d4e
-  - https://github.com/roki-a/PastaPerfect/commit/88f17b0
+### Case 5 - Direct API request on the Cook page
 
-### Case 5 — Direct API Request on the Cook Page
+- **What it gave me:** A deployed setup that was meant to use the mock API.
+- **What was wrong with it:** The Cook page still called `/api` directly, which does not exist on GitHub Pages.
+- **What I did instead:** I found the direct `fetch()` in Cook.jsx and replaced it with the shared `getPasta()` function.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/daeeaaa
 
-- AI output: The Cook page continued making a direct `/api` request even after the deployed version was configured to use the mock API.
-- What was wrong: This caused the deployed GitHub Pages version to request an API endpoint that does not exist on GitHub Pages.
-- How I fixed it: I identified the direct `fetch()` call in Cook.jsx and changed the page to use the shared `getPasta()` API function so the application can use the mock API on GitHub Pages and the real API when configured for the backend.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/daeeaaa
+### Case 6 - Uploaded image path
 
-### Case 6 — Uploaded Pasta Image Path
+- **What it gave me:** An image-path fix that treated every image the same.
+- **What was wrong with it:** Uploaded images are data URLs saved by the mock API in localStorage, so adding the Pages base path to them broke them.
+- **What I did instead:** I used the base path only for predefined images and used data URLs directly.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2315a13
 
-- AI output: The initial image-path solution treated uploaded pasta images the same way as predefined images stored in the public folder.
-- What was wrong: Uploaded pasta images are stored as data URLs in the mock API/localStorage, so adding the GitHub Pages base path to every image path caused the uploaded image to fail.
-- How I fixed it: I identified that predefined pasta images and uploaded images require different handling. Predefined image paths use the GitHub Pages base path, while uploaded images stored as data URLs must be used directly without adding the base path.
-- Commit: https://github.com/roki-a/PastaPerfect/commit/2315a13
+## 3. Who wrote what
 
-## My Own Work
+### Written by me
 
-The following parts were written, adapted, tested, or substantially changed by me:
+- **File:** Header.jsx
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2f91658
+- **What it does and why it is built this way:** The header decides which nav link gets the active line from the current route. The AI's version lost the line on Presets, so I made both `/` and `/presets` count as the Presets section, since the home page is the Presets page.
 
-- Designing and adapting the Pasta Perfect interface based on my UI/UX design.
-- Deciding the overall page structure, navigation, content organization, and user flow.
-- Adapting AI-assisted React and CSS implementations to the existing Pasta Perfect project.
-- Testing the application in the browser and identifying visual, routing, interaction, and deployment problems.
-- Adjusting the tomato timer layout, drag direction, and ruler interaction.
-- Configuring and testing the PostgreSQL database and seed data.
-- Testing the Express API using PowerShell and verifying that the pasta preset data was returned correctly.
-- Troubleshooting PostgreSQL startup and connection issues during local development.
-- Testing the GitHub Pages deployment and using browser developer tools to identify 404 errors, routing problems, and incorrect asset/API paths.
-- Testing the production build using `npm run build` before deploying the application.
-- Reviewing the GitHub Actions deployment configuration and verifying that the Vite base path was correctly applied for the `/PastaPerfect/` GitHub Pages repository path.
-- Adapting the application so GitHub Pages can use the mock API while the local application can still use the real Express API.
-- Identifying that the Cook page was still making a direct API request and verifying that it needed to use the shared API layer.
-- Identifying the difference between predefined pasta images stored in the public folder and uploaded pasta images stored as data URLs.
-- Testing and fixing the display of uploaded pasta images on the Pasta Presets page.
-- Testing navigation and routing directly on the deployed GitHub Pages site.
-- Using PowerShell commands such as `git diff`, `git status`, `git log`, and `npm run build` to inspect, verify, and test my changes before committing them.
-- Reviewing the changes shown by Git before committing and deciding which files and changes should be included in each commit.
-- Reviewing and modifying AI-assisted code before keeping it in the project.
-- Verifying that resetting a customized preset restores the recommended status and time in the UI.
-- Making final decisions about which AI suggestions to keep, modify, or reject based on testing and the intended Pasta Perfect design.
+- **File:** Cook.jsx
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/daeeaaa
+- **What it does and why it is built this way:** The Cook page loads the pasta it is timing. I replaced its direct `fetch('/api/pasta/:id')` with `getPasta(id)`, so every page asks one shared API layer for data and the app picks the mock API on GitHub Pages or Express locally.
 
-I reviewed and tested AI-assisted code before keeping it in the project.
+- **File:** TODO: the file where uploaded and predefined images are shown
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/2315a13
+- **What it does and why it is built this way:** Predefined images are files in the public folder, so they need the Pages base path in front. Uploaded images are data URLs, which already contain the whole image, so they are used as they are.
+
+- **File:** TODO: the tomato timer component and its CSS
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
+- **What it does and why it is built this way:** Dragging the tomato changes the cooking time: left lowers it, right raises it, and the ruler indicator moves with the drag so you can see how much you changed. I set the direction and layout to match my design.
+
+I also designed the interface and page structure, set up and seeded PostgreSQL, tested the API with PowerShell, and reviewed every `git diff` before committing.
+
+### The AI-written part I understand best
+
+- **File:** TODO: the mock API file (I believe `client/src/api/httpApi.js`; check the repo)
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/6920b13
+- **What it does and why we kept it:** GitHub Pages can only host static files, so there is no Express server or database there. The mock API answers the same calls from data kept in the browser, and one shared API layer chooses between the mock and the real Express API. We kept it so the deployed demo works without a server, while local development still uses PostgreSQL.
