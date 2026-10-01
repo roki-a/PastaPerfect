@@ -917,7 +917,11 @@ export default function Cook() {
           <div className="pasta-header">
 
             <PastaThumb
-              src={`${import.meta.env.BASE_URL}${pasta.image}`}
+              src={
+                pasta.image?.startsWith('data:')
+                  ? pasta.image
+                  : `${import.meta.env.BASE_URL}${pasta.image}`
+              }
               name={pasta.name}
             />
 
