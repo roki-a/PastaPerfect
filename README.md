@@ -4,8 +4,11 @@
 
 Public repository: https://github.com/roki-a/PastaPerfect
 
-Live app: https://roki-a.github.io/PastaPerfect/
-          https://pasta-perfect-api.onrender.com
+Live app: 
+
+* https://roki-a.github.io/PastaPerfect/
+         
+* https://pasta-perfect-api.onrender.com
 
 Production API: https://pasta-perfect-api.onrender.com
 
@@ -117,6 +120,7 @@ Detailed AI usage is documented here:
 The React frontend is deployed through GitHub Pages and Render:
 
 https://roki-a.github.io/PastaPerfect/
+
 https://pasta-perfect-api.onrender.com
 
 The Express API is deployed separately on Render:
