@@ -392,9 +392,12 @@ export default function EditPasta() {
 
     try {
       await updatePasta(id, {
-        name: form.name.trim(),
-        image: form.image.trim(),
-      })
+      name: form.name.trim(),
+      image: form.image.trim(),
+      alDenteSeconds,
+      firmSeconds,
+      softSeconds,
+    })
 
       navigate('/presets')
     } catch (requestError) {

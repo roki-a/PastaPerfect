@@ -412,6 +412,9 @@ app.put(
       const {
         name,
         image,
+        alDenteSeconds,
+        firmSeconds,
+        softSeconds,
       } = request.body
 
       // Validate name.
@@ -448,13 +451,30 @@ app.put(
         })
       }
 
+      // Validate cooking times.
+      if (
+        !validateCookingTimes(
+          alDenteSeconds,
+          firmSeconds,
+          softSeconds,
+        )
+      ) {
+        return response.status(400).json({
+          error:
+            'Cooking times must be positive whole seconds.',
+        })
+      }
+
       const updated =
-        await pasta.updateCustomDetails(
+        await pasta.updateCustom(
           pool,
           id,
           {
             name: name.trim(),
             image: image.trim(),
+            alDenteSeconds,
+            firmSeconds,
+            softSeconds,
           },
         )
 
