@@ -145,11 +145,12 @@ app.get(
 // APP PASSWORD AUTHENTICATION
 // ---------------------------------------------------------
 
+const appUsername = process.env.APP_USERNAME
 const appPassword = process.env.APP_PASSWORD
 
-if (!appPassword) {
+if (!appUsername || !appPassword) {
   console.error(
-    'APP_PASSWORD is not set. Add it to the Render environment variables.'
+    'APP_USERNAME and APP_PASSWORD must be set in the environment variables.'
   )
   process.exit(1)
 }
@@ -158,20 +159,61 @@ function requireAppPassword(request, response, next) {
   const authorization = request.get('Authorization')
 
   if (!authorization) {
+    response.set('WWW-Authenticate', 'Basic realm="Pasta Perfect"')
+
     return response.status(401).json({
-      error: 'App password required.',
+      error: 'Authentication required.',
     })
   }
 
-  const [scheme, password] = authorization.split(' ')
+  const [scheme, encodedCredentials] = authorization.split(' ')
 
   if (
-    scheme !== 'Bearer' ||
-    !password ||
+    scheme !== 'Basic' ||
+    !encodedCredentials
+  ) {
+    response.set('WWW-Authenticate', 'Basic realm="Pasta Perfect"')
+
+    return response.status(401).json({
+      error: 'Authentication required.',
+    })
+  }
+
+  let decodedCredentials
+
+  try {
+    decodedCredentials = Buffer
+      .from(encodedCredentials, 'base64')
+      .toString('utf8')
+  } catch {
+    response.set('WWW-Authenticate', 'Basic realm="Pasta Perfect"')
+
+    return response.status(401).json({
+      error: 'Invalid authentication.',
+    })
+  }
+
+  const separatorIndex = decodedCredentials.indexOf(':')
+
+  if (separatorIndex === -1) {
+    response.set('WWW-Authenticate', 'Basic realm="Pasta Perfect"')
+
+    return response.status(401).json({
+      error: 'Invalid authentication.',
+    })
+  }
+
+  const username = decodedCredentials.slice(0, separatorIndex)
+  const password = decodedCredentials.slice(separatorIndex + 1)
+
+  if (
+    username !== appUsername ||
     password !== appPassword
   ) {
+    response.set('WWW-Authenticate', 'Basic realm="Pasta Perfect"')
+
     return response.status(401).json({
-      error: 'Invalid app password.',
+      error: 'Invalid authentication.',
     })
   }
 

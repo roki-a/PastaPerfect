@@ -2,30 +2,38 @@
 
 const BASE = import.meta.env.VITE_API_BASE_URL || ''
 
+const USERNAME_KEY = 'pastaPerfectAppUsername'
 const PASSWORD_KEY = 'pastaPerfectAppPassword'
+
+export function getAppUsername() {
+  return sessionStorage.getItem(USERNAME_KEY) || ''
+}
 
 export function getAppPassword() {
   return sessionStorage.getItem(PASSWORD_KEY) || ''
 }
 
-export function setAppPassword(password) {
+export function setAppCredentials(username, password) {
+  sessionStorage.setItem(USERNAME_KEY, username)
   sessionStorage.setItem(PASSWORD_KEY, password)
 }
 
-export function clearAppPassword() {
+export function clearAppCredentials() {
+  sessionStorage.removeItem(USERNAME_KEY)
   sessionStorage.removeItem(PASSWORD_KEY)
 }
 
 async function request(path, options = {}) {
+  const username = getAppUsername()
   const password = getAppPassword()
 
   const response = await fetch(`${BASE}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      ...(password
+      ...(username && password
         ? {
-            Authorization: `Bearer ${password}`,
+            Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           }
         : {}),
       ...(options.headers || {}),

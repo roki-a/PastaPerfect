@@ -1,24 +1,25 @@
 import { useState } from 'react'
-
 import {
-  setAppPassword,
-  clearAppPassword,
+  setAppCredentials,
+  clearAppCredentials,
 } from '../api/httpApi'
 
 export default function AppPassword({ children }) {
   const [authenticated, setAuthenticated] = useState(false)
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [checking, setChecking] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
 
+    const trimmedUsername = username.trim()
     const trimmedPassword = password.trim()
 
-    if (!trimmedPassword) {
-      setError('Please enter the app password.')
+    if (!trimmedUsername || !trimmedPassword) {
+      setError('Please enter your username and password.')
       return
     }
 
@@ -26,28 +27,36 @@ export default function AppPassword({ children }) {
     setError('')
 
     try {
+      const credentials = btoa(
+        `${trimmedUsername}:${trimmedPassword}`,
+      )
+
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL || ''}/api/pasta`,
         {
           headers: {
-            Authorization: `Bearer ${trimmedPassword}`,
+            Authorization: `Basic ${credentials}`,
           },
         },
       )
 
       if (!response.ok) {
-        clearAppPassword()
+        clearAppCredentials()
         setAuthenticated(false)
-        setError('Incorrect app password.')
+        setError('Incorrect username or password.')
         return
       }
 
-      // Only save the password after Render accepts it.
-      setAppPassword(trimmedPassword)
+      setAppCredentials(
+        trimmedUsername,
+        trimmedPassword,
+      )
+
       setAuthenticated(true)
+      setUsername('')
       setPassword('')
     } catch {
-      clearAppPassword()
+      clearAppCredentials()
       setAuthenticated(false)
       setError('Unable to connect to the API.')
     } finally {
@@ -65,12 +74,28 @@ export default function AppPassword({ children }) {
         <h1>Pasta Perfect</h1>
 
         <p>
-          Enter the app password to continue.
+          Enter the app username and password to continue.
         </p>
 
         <form onSubmit={handleSubmit}>
+          <label htmlFor="app-username">
+            Username
+          </label>
+
+          <input
+            id="app-username"
+            type="text"
+            value={username}
+            onChange={(event) => {
+              setUsername(event.target.value)
+              setError('')
+            }}
+            autoComplete="username"
+            disabled={checking}
+          />
+
           <label htmlFor="app-password">
-            App password
+            Password
           </label>
 
           <div className="password-input-wrapper">
@@ -90,17 +115,12 @@ export default function AppPassword({ children }) {
               type="button"
               className="password-toggle"
               onClick={() => setShowPassword((current) => !current)}
+              disabled={checking}
               aria-label={
                 showPassword
                   ? 'Hide password'
                   : 'Show password'
               }
-              title={
-                showPassword
-                  ? 'Hide password'
-                  : 'Show password'
-              }
-              disabled={checking}
             >
               {showPassword ? 'Hide' : 'Show'}
             </button>
