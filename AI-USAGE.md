@@ -59,8 +59,8 @@ and adapted to my UI/UX design before I kept it. This file is the record.
 
 - **Tool:** ChatGPT
 - **What I asked for:** Help making the frontend work on GitHub Pages: routing, API handling, asset paths, and production build testing.
-- **What it gave back:** Fixes for the Pages routing and 404 errors, the Vite base path setup, and a mock API for the deployed demo.
-- **What I kept, what I changed, and why:** I kept the mock API so Pages works without a server, while the app still uses the real Express API locally. I tested with `npm run build` and browser developer tools.
+- **What it gave back:** Fixes for the Pages routing and 404 errors, the Vite base path setup, and a mock API for an initial static deployment.
+- **What I kept, what I changed, and why:** I kept the mock API architecture as a fallback for static hosting. I later changed the production GitHub Pages configuration to use the deployed Render API. I tested the build and deployment with browser developer tools.
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/6920b13 (also https://github.com/roki-a/PastaPerfect/commit/6a95d4e and https://github.com/roki-a/PastaPerfect/commit/88f17b0)
 
 ### 2026-09-27 - Cook page API loading
@@ -133,20 +133,20 @@ and adapted to my UI/UX design before I kept it. This file is the record.
 
 - **File:** Cook.jsx
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/daeeaaa
-- **What it does and why it is built this way:** The Cook page loads the pasta it is timing. I replaced its direct `fetch('/api/pasta/:id')` with `getPasta(id)`, so every page asks one shared API layer for data and the app picks the mock API on GitHub Pages or Express locally.
+- **What it does and why it is built this way:** The Cook page loads the pasta it is timing. I replaced its direct `fetch('/api/pasta/:id')` with `getPasta(id)`, so every page asks one shared API layer for data.
 
-- **File:** TODO: the file where uploaded and predefined images are shown
+- **File:** Presets.jsx
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/2315a13
-- **What it does and why it is built this way:** Predefined images are files in the public folder, so they need the Pages base path in front. Uploaded images are data URLs, which already contain the whole image, so they are used as they are.
+- **What it does and why it is built this way:** The Presets page displays predefined pasta images and uploaded pasta images. Predefined images are files in the public folder and need the Pages base path, while uploaded images are data URLs and must be used directly without adding the base path.
 
-- **File:** TODO: the tomato timer component and its CSS
+- **File:** Cook.jsx and Cook.css
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
-- **What it does and why it is built this way:** Dragging the tomato changes the cooking time: left lowers it, right raises it, and the ruler indicator moves with the drag so you can see how much you changed. I set the direction and layout to match my design.
+- **What it does and why it is built this way:** The tomato timer uses a drag interaction to change cooking time. Dragging left lowers the time and dragging right raises it, while the ruler indicator follows the drag. I adjusted the structure and CSS to match my UI/UX design.
 
-I also designed the interface and page structure, set up and seeded PostgreSQL, tested the API with PowerShell, and reviewed every `git diff` before committing.
+I also designed the interface and page structure, set up and seeded PostgreSQL, tested the API with PowerShell, and reviewed my changes before committing.
 
 ### The AI-written part I understand best
 
-- **File:** TODO: the mock API file (I believe `client/src/api/httpApi.js`; check the repo)
+- **File:** client/src/api/mockApi.js
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/6920b13
-- **What it does and why we kept it:** GitHub Pages can only host static files, so there is no Express server or database there. The mock API answers the same calls from data kept in the browser, and one shared API layer chooses between the mock and the real Express API. We kept it so the deployed demo works without a server, while local development still uses PostgreSQL.
+- **What it does and why we kept it:** GitHub Pages can only host static files, so there is no Express server or PostgreSQL database running directly on GitHub Pages. The mock API provides the application operations using data stored in the browser. The shared API layer can select the mock API for a static deployment or the real Express API when the backend is available. I understand this separation because it allows the frontend to have an API implementation even when no backend server is available.
