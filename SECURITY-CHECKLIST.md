@@ -9,7 +9,7 @@
 | 3 | No connection string, key, token or password is hardcoded in source, comments or commented-out code | Yes | I searched the project excluding `.git`, `node_modules` and build output; the only real database password found was in the ignored local `server/.env`. |
 | 4 | Git history is clean: I searched `git log -p` for password, secret, api key and `postgres://` | Yes | Searches of the repository and Git history found no committed `roki_winter` database password or other real credential. |
 | 5 | Any credential that was ever committed has been rotated | N/A | No real credential was found in the committed repository history, so there was no committed credential requiring rotation. |
-| 6 | Production credentials live only in my hosting provider's environment settings | Yes | The production API is deployed on Render. The database connection is configured through the Render `DATABASE_URL` environment variable, and the app password is configured through the Render `APP_PASSWORD` environment variable. These credentials are not stored in the GitHub repository. |
+| 6 | Production credentials live only in my hosting provider's environment settings | Yes | The production API is deployed on Render. The database connection is configured through the Render DATABASE_URL environment variable, and the app username and password are configured through the Render APP_USERNAME and APP_PASSWORD environment variables. These credentials are not stored in the GitHub repository. |
 
 ## GitHub Actions
 
@@ -36,11 +36,11 @@
 
 | # | Check | Yes / No / N/A | Evidence |
 | --- | --- | --- | --- |
-| 18 | The app has an access layer: Cloudflare Zero Trust, an app-level password, or a real login | Yes | Pasta Perfect uses an app-level password. The client displays an app-password gate, and the Render API requires a valid `Authorization: Bearer` header before allowing access to `/api` routes. |
+| 18 | The app has an access layer: Cloudflare Zero Trust, an app-level password, or a real login | Yes | Pasta Perfect uses an app-level password. The client displays an app-password gate, and the Render API requires a valid Authorization: Basic ... header before allowing access to /api routes. |
 | 19 | If Supabase or Firebase: Row Level Security or security rules are on, and I tested it signed out | N/A | Pasta Perfect uses PostgreSQL with the Node/Express API, not Supabase or Firebase. |
-| 20 | If Zero Trust: `tjakoen.s@gmail.com` is on the access policy. If an app password: the credentials are in my private workspace `project/README.md` | Yes | Pasta Perfect uses an app-level password. The app password is stored as the Render `APP_PASSWORD` environment variable, and the credentials are documented in the private workspace `project/README.md` for assessment access. The credential is not stored in the public GitHub repository. |
+| 20 | If Zero Trust: `tjakoen.s@gmail.com` is on the access policy. If an app password: the credentials are in my private workspace `project/README.md` | Yes | Pasta Perfect uses an app-level password. The app username and password are stored as the Render APP_USERNAME and APP_PASSWORD environment variables, and the credentials are documented in the private workspace project/README.md for assessment access. The credentials are not stored in the public GitHub repository. |
 | 21 | The gate covers every route, including the ones that only change data | Yes | `app.use('/api', requireAppPassword)` applies the password middleware to the `/api` namespace, covering both read and data-changing API routes. |
-| 22 | The credentials for the gate are environment variables, not in source | Yes | The production app password is stored in Render as `APP_PASSWORD`. No real app password is hardcoded in the source code or public GitHub repository. |
+| 22 | The credentials for the gate are environment variables, not in source | Yes | The production app username and password are stored in Render as APP_USERNAME and APP_PASSWORD. No real app credentials are hardcoded in the source code or public GitHub repository. |
 
 ## Input and output
 
@@ -58,7 +58,7 @@
 | 27 | No student number, personal email, phone number or home address in the repository or in commit messages | No | Recent Git history contains the personal email `mendozashane0820@gmail.com` and the author name `SHANEMENDOZA\mendo`. Git has now been configured to use `roki-a@users.noreply.github.com` for future commits. The existing commit history still contains the old email. |
 | 28 | No classmate's personal data in the repository | Yes | Searches performed on the project found no classmate personal information; the seed data contains pasta information rather than people's data. |
 | 29 | Dependencies come from official registries, and `node_modules` is gitignored | Yes | The project dependencies are installed through npm and `node_modules` is excluded from Git. |
-| 30 | Images, fonts and other assets are mine, licensed, or credited | TODO | This needs to be verified against the project's image/font sources before marking Yes. |
+| 30 | Images, fonts and other assets are mine, licensed, or credited | No | Some project assets still need their original source or licensing/credit information verified before this can be marked Yes. |
 | 31 | Repository visibility is deliberate, and I checked it after my last push | Yes | The GitHub repository was opened in GitHub settings and its public repository configuration was checked after the latest push. |
 
 ## Anything I found and fixed
