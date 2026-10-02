@@ -111,8 +111,8 @@ npm run preview
 
 ## Presentation
 
-- Video: to be added
-- Slides: to be added
+- Video: https://drive.google.com/drive/folders/1J7wz1OzFR-NcnpTJEWidAGLEkMY425zr?usp=sharing
+- Slides: https://canva.link/qs00b4ytz85cg08
 - Square image: to be added to the project workspace/folder
 
 ## AI usage
