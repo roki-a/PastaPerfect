@@ -178,10 +178,13 @@ what is protected and the limitations I know about.
 
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
 
-I used ChatGPT and Claude for planning, explaining code, debugging, the tomato
-timer interaction, and GitHub Pages deployment. I tested everything in the
-browser and changed or fixed the code where it was wrong, and `AI-USAGE.md`
-lists the cases where the AI got it wrong and the parts I wrote myself.
+I used ChatGPT and Claude extensively throughout development for planning,
+explaining code, debugging, implementation support, the tomato timer
+interaction, and GitHub Pages deployment. I tested AI-assisted work in the
+browser, changed or fixed suggestions when they did not match the design or
+behavior, and kept my own implementation decisions. `AI-USAGE.md` records the
+specific AI-assisted work, the cases where the AI got it wrong, and the parts
+I wrote myself.
 
 The full record is in [AI-USAGE.md](AI-USAGE.md).
 
