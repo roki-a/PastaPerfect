@@ -47,14 +47,6 @@ and adapted to my UI/UX design before I kept it. This file is the record.
 - **What I kept, what I changed, and why:** I kept the structure, then tested and refined it so dragging left lowers the time, dragging right raises it, and the ruler indicator follows the drag.
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/60f256a
 
-### 2026-09-26 - "My time" / "Recommended" label
-
-- **Tool:** ChatGPT
-- **What I asked for:** Help fixing the Presets card label so a customized time shows "My time" and resetting it goes back to "Recommended".
-- **What it gave back:** Logic linking the custom time values to the label.
-- **What I kept, what I changed, and why:** I kept and adapted the logic so a reset uses the original recommended time and the card shows "Recommended". I checked the reset in the UI.
-- **Commit:** https://github.com/roki-a/PastaPerfect/commit/a7c91d2
-
 ### 2026-09-27 - GitHub Pages deployment and mock API
 
 - **Tool:** ChatGPT
@@ -78,6 +70,14 @@ and adapted to my UI/UX design before I kept it. This file is the record.
 - **What it gave back:** An image-path fix.
 - **What I kept, what I changed, and why:** I found that predefined images come from the public folder and need the Pages base path, while uploaded images are data URLs and must be used as they are. I changed the image handling to treat the two differently.
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/2315a13
+
+### 2026-10-02 - "My time" / "Recommended" label
+
+- **Tool:** ChatGPT
+- **What I asked for:** Help fixing the Presets card label so a customized time shows "My time" and resetting it goes back to "Recommended".
+- **What it gave back:** Logic linking the custom time values to the label.
+- **What I kept, what I changed, and why:** I kept and adapted the logic so a reset uses the original recommended time and the card shows "Recommended". I checked the reset in the UI.
+- **Commit:** https://github.com/roki-a/PastaPerfect/commit/e1c89e6
 
 ## 2. Where the AI got it wrong
 
@@ -150,3 +150,13 @@ I also designed the interface and page structure, set up and seeded PostgreSQL, 
 - **File:** client/src/api/mockApi.js
 - **Commit:** https://github.com/roki-a/PastaPerfect/commit/6920b13
 - **What it does and why we kept it:** GitHub Pages can only host static files, so there is no Express server or PostgreSQL database running directly on GitHub Pages. The mock API provides the application operations using data stored in the browser. The shared API layer can select the mock API for a static deployment or the real Express API when the backend is available. I understand this separation because it allows the frontend to have an API implementation even when no backend server is available.
+
+### Backend and database work I did
+
+- **File:** server/db/seed.sql
+- **What it does and why it is built this way:** I set up the PostgreSQL seed data used by the app and adjusted the pasta records and cooking times to fit the Pasta Perfect data model. I also ran the seed process locally and checked the API responses with PowerShell.
+- **Related commits:** https://github.com/roki-a/PastaPerfect/commit/7b1b56e3b5f3ac75b6cd03987127f6d8cd6e456a and https://github.com/roki-a/PastaPerfect/commit/c52d19e08ff59a40b4d3216acb5aed9be3a0316c
+
+- **File:** server/server.js
+- **What it does and why it is built this way:** I worked on the Express API behavior, including route validation and the application password protection used by the deployed site. The API keeps database access on the server instead of exposing PostgreSQL directly to the browser.
+- **Related commits:** https://github.com/roki-a/PastaPerfect/commit/c549b90817c10f326b02f38d4d6cb2ec95e6e9ea and https://github.com/roki-a/PastaPerfect/commit/378d363881f3fda0b13b3f1bdf04773991608338
