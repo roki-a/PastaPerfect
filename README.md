@@ -19,7 +19,8 @@ choose how soft they like it, and cook it with a countdown timer.
 > free tier, so the first request after a quiet period can take up to a
 > minute while it wakes up.
 
-![The Presets screen](docs/assets/high%20fidelity/presets%20desktop.png)
+<img width="1920" height="1207" alt="image" src="https://github.com/user-attachments/assets/938053b0-f26f-4de0-9e53-4e52540f998a" />
+
 
 ## What it does
 
