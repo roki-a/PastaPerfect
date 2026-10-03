@@ -1,24 +1,90 @@
 # Mockup
 
-Your prelim wireframes are finished and are not being redone. The mockup is what
-the app will actually look like: the wireframes painted in, with your real
-colours, type, spacing and content.
+The Pasta Perfect interface was first planned using low-fidelity
+wireframes created in Figma. These wireframes established the main
+screen structure, navigation, and user flow.
 
-**This is submitted as images or a PDF.** A written description of a picture
-scores in the lowest band, because the thing being asked for is the picture.
+The final high-fidelity interface was implemented directly in the
+React application. The high-fidelity screenshots in this folder show
+the actual implemented design with the project's colours, typography,
+spacing, images, and content.
 
-Put the exported images in `assets/` and link them here, so the repository
-carries them too.
+## Low-fidelity wireframes
 
-## What it should show
+The low-fidelity wireframes show the planned structure of the
+application before implementation. Desktop and mobile layouts were
+created for the main screens.
 
-- Every screen in your revised proposal, and no screens that are not in it
-- Real content, not "Lorem ipsum" and not "Title here"
-- The empty state of at least one screen, because that is the one people forget
-- What it looks like on a phone
+### Screen map
 
-## Honest note
+![Pasta Perfect screen map](assets/low%20fidelity/screen%20map.png)
 
-Anything in the mockup that is not in the built app by the end needs a sentence
-in your journal explaining what happened. That is a normal part of building
-something, and saying so reads far better than quietly shipping less.
+### Presets
+
+![Presets desktop low-fidelity wireframe](assets/low%20fidelity/presets%20desktop.png)
+
+![Presets mobile low-fidelity wireframe](assets/low%20fidelity/presets%20mobile.png)
+
+### Cook
+
+![Cook desktop low-fidelity wireframe](assets/low%20fidelity/cook%20desktop.png)
+
+![Cook mobile low-fidelity wireframe](assets/low%20fidelity/cook%20mobile.png)
+
+### Add Pasta
+
+![Add Pasta desktop low-fidelity wireframe](assets/low%20fidelity/add%20pasta%20desktop.png)
+
+![Add Pasta mobile low-fidelity wireframe](assets/low%20fidelity/add%20pasta%20mobile.png)
+
+### Recipes
+
+![Recipes desktop low-fidelity wireframe](assets/low%20fidelity/recipes%20desktop.png)
+
+![Recipes mobile low-fidelity wireframe](assets/low%20fidelity/recipes%20mobile.png)
+
+## High-fidelity implementation
+
+The final visual design was implemented directly in the React
+application. The following screenshots show the implemented
+high-fidelity interface.
+
+### Presets
+
+![Presets high-fidelity implementation](assets/high%20fidelity/presets%20desktop.png)
+
+### Cook
+
+![Cook high-fidelity implementation](assets/high%20fidelity/cook%20desktop.png)
+
+### Add Pasta
+
+![Add Pasta high-fidelity implementation](assets/high%20fidelity/add%20pasta%20desktop.png)
+
+### Edit Pasta
+
+![Edit Pasta high-fidelity implementation](assets/high%20fidelity/edit%20pasta.png)
+
+### Recipes
+
+![Recipes high-fidelity implementation](assets/high%20fidelity/recipes%20desktop.png)
+
+![Recipe details high-fidelity implementation](assets/high%20fidelity/recipes%20desktop%20show.png)
+
+## Design implementation
+
+The low-fidelity Figma wireframes were used to establish the structure
+and flow of the application.
+
+The interface was then developed directly in the React application
+using the final colours, typography, images, spacing, components, and
+interactions.
+
+The high-fidelity screenshots therefore represent the final
+implemented interface rather than a separate high-fidelity Figma
+prototype.
+
+The mobile wireframes document the planned responsive layouts. The
+final application was implemented from these designs and the desktop
+high-fidelity screenshots document the completed visual
+implementation.
