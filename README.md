@@ -171,7 +171,7 @@ PostgreSQL  (Render)
 
 ## Security and privacy
 
-See [docs/05-security-and-privacy.md](docs/05-security-and-privacy.md) for
+See [docs/06-security-and-privacy.md](docs/06-security-and-privacy.md) for
 what is protected and the limitations I know about.
 
 ## AI use
