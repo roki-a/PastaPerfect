@@ -7,7 +7,7 @@
 | 1 | `.env` is gitignored and is not in the repository | Yes | `.gitignore` contains `.env`, `git check-ignore -v server/.env` confirmed it is ignored, and `git ls-files server/.env` returned nothing. |
 | 2 | A `.env.example` with placeholder values only is committed | Yes | `server/.env.example` contains `YOUR_PASSWORD` instead of a real database password, and the file is tracked in the repository. |
 | 3 | No connection string, key, token or password is hardcoded in source, comments or commented-out code | Yes | I searched the project excluding `.git`, `node_modules` and build output; the only real database password found was in the ignored local `server/.env`. |
-| 4 | Git history is clean: I searched `git log -p` for password, secret, api key and `postgres://` | Yes | Searches of the repository and Git history found no committed `roki_winter` database password or other real credential. |
+| 4 | Git history is clean: I searched `git log -p` for password, secret, api key and `postgres://` | Yes | Searches of the repository and Git history found no committed database password or other real credential. |
 | 5 | Any credential that was ever committed has been rotated | N/A | No real credential was found in the committed repository history, so there was no committed credential requiring rotation. |
 | 6 | Production credentials live only in my hosting provider's environment settings | Yes | The production API is deployed on Render. The database connection is configured through the Render DATABASE_URL environment variable, and the app username and password are configured through the Render APP_USERNAME and APP_PASSWORD environment variables. These credentials are not stored in the GitHub repository. |
 
