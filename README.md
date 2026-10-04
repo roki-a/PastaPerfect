@@ -19,8 +19,25 @@ choose how soft they like it, and cook it with a countdown timer.
 > free tier, so the first request after a quiet period can take up to a
 > minute while it wakes up.
 
+## Preset Page
 <img width="1920" height="1207" alt="image" src="https://github.com/user-attachments/assets/938053b0-f26f-4de0-9e53-4e52540f998a" />
 
+## Cook Page
+<img width="1920" height="1382" alt="image" src="https://github.com/user-attachments/assets/8cbe831d-03bb-4be0-92a2-8377b2f8964b" />
+
+## Edit Page
+- Predefined Pasta
+<img width="1920" height="1410" alt="image" src="https://github.com/user-attachments/assets/4627aaa1-37bb-4b5d-9e22-a614fb810276" />
+
+- Added Pasta
+<img width="1920" height="1598" alt="image" src="https://github.com/user-attachments/assets/451b269c-b3bc-4913-9b43-8794921883a8" />
+
+
+## Add Pasta
+<img width="1920" height="1706" alt="image" src="https://github.com/user-attachments/assets/b280ab78-17c6-4264-9a7c-4fa382b95e5c" />
+
+## Recipe Page
+<img width="1920" height="1322" alt="image" src="https://github.com/user-attachments/assets/56c2a626-1b22-4f81-8860-848c22ad6271" />
 
 ## What it does
 
